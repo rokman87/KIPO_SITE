@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+
+
+
+{% block title %}Домашняя страница{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+{% block content %}
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Приложение</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.name }}<br>
+                {{ form.institution_type }}<br>
+                <span>{{ error }}</span>
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <h1>KIPO-SITE</h1>
+    <div class="hello-user">
+        <p id="hello-user">Привет, {{ user.username|default:'Пользователь' }}</p>
+        <a id="exit" href="{% url 'exit' %}">
+            <button class="btn btn-primary">Выйти</button>
+        </a>
+    </div>
+</header>
+
+<div class="application-panel">
+    <button class="popup-btn" id="open_pop_up">NEW</button>
+    {% for el in applications %}
+    <a class="app-element" href="/applications/{{ el.id }}/schedules">
+        <div class="alert alert-warning">
+            <h3>{{ el.name }}</h3><br>
+            <p>{{ el.institution_type }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<footer>
+
+</footer>
+{% endblock %}

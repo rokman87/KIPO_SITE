@@ -1,0 +1,50 @@
+{% extends 'applications/layout.html' %}
+{% load static %}
+
+{% block title %}Расписания{% endblock %}
+{% block content %}
+
+
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Расписание</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.title }}<br>
+                {{ form.week_date }}<br>
+                {{ form.week_days }}<br>
+                {{ form.lessons_counts }}<br>
+                {{ form.week_type }}<br>
+
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="features">
+    <header>
+        <h1>Расписания</h1>
+        <button class="popup-btn" id="open_pop_up">NEW</button>
+    </header>
+
+    <div class="output">
+        <span>{{ error }}</span>
+        {% for el in groups %}
+        <div class="alert alert-warning">
+            <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.week_date }})</h3>
+            <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
+            <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
+            <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

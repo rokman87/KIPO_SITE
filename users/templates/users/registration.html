@@ -1,0 +1,15 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<h1 id="logo">Регистрация</h1>
+
+<form class="formlogin" action="" method="POST">
+{% csrf_token %}
+{% if error %}
+{{ error }}
+{% endif %}
+{{ form }}<br>
+<input class="btn btn-success" type="submit" name="submit" value="Зарегистрироваться"/>
+</form>
+{% endblock %}

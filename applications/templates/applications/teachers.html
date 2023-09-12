@@ -1,0 +1,61 @@
+{% extends 'applications/layout.html' %}
+{% load static %}
+
+{% block title %}Преподаватели{% endblock %}
+{% block content %}
+
+
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Преподавателя</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.name }}<br>
+                {{ form.abbreviation }}<br>
+                {{ form.position }}<br>
+                {{ form.subjects }}<br>
+                {{ form.cabinets }}<br>
+                <p>Выберите цвет:</p>
+                {{ form.color }}<br>
+                <span>{{ error }}</span>
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="features">
+    <header>
+        <h1>Преподаватели</h1>
+        <button class="popup-btn" id="open_pop_up">NEW</button>
+    </header>
+
+    <div class="output">
+        {% for el in groups %}
+        <div class="alert alert-warning">
+            <h3 style='color:{{ el.color }};'>{{ el.name }} ({{ el.abbreviation }})</h3>
+            <p style='color:{{ el.color }};'>Должность: {{ el.position }}</p>
+
+            <!-- Вывод предметов в SelectMultiple -->
+            <p style='color:{{ el.color }};'>Предметы:
+                {% for subject in el.subjects.all %}
+                       [{{ subject }}]
+                {% endfor %}
+            </p>
+
+            <!-- Вывод аудиторий в SelectMultiple -->
+            <p style='color:{{ el.color }};'>Аудитории:
+                {% for cabinet in el.cabinets.all %}
+                       [{{ cabinet }}]
+                {% endfor %}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

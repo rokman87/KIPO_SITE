@@ -1,0 +1,63 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5%;
+    background-color: bisque;
+}
+
+.hello-user {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+}
+p#hello-user {
+    height: fit-content;
+    margin-top: 1em;
+}
+a#exit {
+    margin-top: 0.625em;
+}
+
+.banner {
+    display: grid;
+    justify-content: center;
+    margin-top: 20%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.application-panel {
+    margin: auto;
+    margin-top: 3%;
+    padding: 3.5%;
+    width: 60%;
+    border-radius: 15px;
+}
+button.btn.btn-primary {
+    background: #fff3cd;
+    color: #664d03;
+    border-color: #fff3cd;
+}
+
+body {
+    background-color: #a5a06e;
+}
+
+/*Страница логина*/
+.formlogin {
+    margin: auto;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px 15px 40px 15px;
+    position: relative;
+}
+#logo {
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+

@@ -1,0 +1,47 @@
+{% extends 'applications/layout.html' %}
+{% load static %}
+
+{% block title %}Аудитории{% endblock %}
+{% block content %}
+
+
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Аудиторию</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.title }}<br>
+                {{ form.abbreviation }}<br>
+                {{ form.seat_number }}<br>
+                {{ form.building }}<br>
+                <p>Выберите цвет:</p>
+                {{ form.color }}<br>
+                <span>{{ error }}</span>
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="features">
+    <header>
+        <h1>Аудитории</h1>
+        <button class="popup-btn" id="open_pop_up">NEW</button>
+    </header>
+
+    <div class="output">
+        {% for el in groups %}
+        <div class="alert alert-warning">
+            <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.abbreviation }})</h3>
+            <p style='color:{{ el.color }};'>Количество мест: {{ el.seat_number }}</p>
+            <p style='color:{{ el.color }};'>Корпус: {{ el.building }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

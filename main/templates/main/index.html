@@ -1,0 +1,19 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}KIPO-SITE{% endblock %}
+
+{% block content %}
+<div class="banner">
+    <h1>KIPO-SITE</h1>
+    <div class="buttons-bar">
+        <a href="{% url 'pagelogin' %}">
+            <button class="btn btn-primary">Войти</button>
+        </a>
+        <a href="{% url 'registration' %}">
+            <button class="btn btn-primary">Регистрация</button>
+        </a>
+    </div>
+</div>
+
+
+{% endblock %}
