@@ -49,11 +49,10 @@ def bells_create(request, scheb_id):
     # Создаем список дней недели, которые у вас есть (предположим, что это понедельник, вторник, среда и так далее)
     days_of_week = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
-    # Определяем начальное время (предположим, что первый урок начинается в 08:00)
-    start_time = datetime.strptime("08:00", "%H:%M")
-
     # Проходимся по каждому дню недели и каждому уроку и создаем объекты Bells
     for day in days_of_week:
+        # Определяем начальное время (предположим, что первый урок начинается в 08:00)
+        start_time = datetime.strptime("08:00", "%H:%M")
         for lesson_number in range(1, lessons_counts_int + 1):
             lesson_number_str = str(lesson_number)
             lesson = f"Урок {lesson_number_str}"
@@ -97,10 +96,22 @@ def cabinets(request, app_id):
 
 
 def bells(request, app_id):
-    bells = Bells.objects.all()  # Получаем все объекты из модели Bells
-    context = {'bells': bells,
-                'app_id': app_id}
-    return render(request, 'applications/bells.html', context)
+    selected_day = request.GET.get('day')  # Получаем выбранный день из строки запроса
+    if selected_day == None:
+        selected_day = 'Понедельник'
+
+
+    if selected_day:
+        bells = Bells.objects.filter(schedule_id__application_id=app_id, week_day=selected_day)
+    else:
+        bells = Bells.objects.filter(schedule_id__application_id=app_id)
+
+    data={
+        'bells': bells,
+        'selected_day': selected_day
+    }
+
+    return render(request, 'applications/bells.html', data)
 
 
 def work_times(request, app_id):
