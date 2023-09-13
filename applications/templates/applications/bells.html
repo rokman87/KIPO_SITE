@@ -8,7 +8,8 @@
         <h1>Звонки</h1>
     </header>
 
-    <!-- Добавляем кнопки для переключения дней недели -->
+<div class="day_selector">
+    <!-- Добавьте выпадающий список или ссылки для выбора дня -->
     <div class="week-selector">
         <a href="?day=Понедельник">Понедельник</a>
         <a href="?day=Вторник">Вторник</a>
@@ -17,16 +18,16 @@
         <a href="?day=Пятница">Пятница</a>
         <a href="?day=Суббота">Суббота</a>
     </div>
+    <p>Выбранный день: {{ selected_day }} | Тип недели: {{ bell.type }}</p>
 
-    <p>Выбранная неделя: {{ selected_week }}</p>
+</div>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Урок</th>
                 <th>Начало урока</th>
                 <th>Конец урока</th>
-                <th>Тип</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +36,6 @@
                 <td>{{ bell.lesson }}</td>
                 <td>{{ bell.time_start }}</td>
                 <td>{{ bell.time_end }}</td>
-                <td>{{ bell.type }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -111,3 +111,32 @@ button#open_pop_up {
     width: 80%;
     margin: auto;
 }
+
+/*Вывод звонков*/
+.day_selector {
+    display: grid;
+    text-align: center;
+    height: 80px;
+    align-content: space-between;
+    margin-bottom: 10%;
+}
+.week-selector a {
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 1%;
+    margin: auto;
+}
+.week-selector {
+    border-bottom: 1px solid black;
+    height: 50px;
+    margin-top: 2%;
+}
+p {
+    margin: auto;
+}
+table.table {
+    width: 80%;
+    margin: auto;
+}
+
