@@ -34,28 +34,36 @@
         <button class="popup-btn" id="open_pop_up">NEW</button>
     </header>
 
-    <div class="output">
+   <table class="table">
+    <thead>
+        <tr>
+            <th style="color: {{ el.color }}">Название</th>
+            <th style="color: {{ el.color }}">Сокращение</th>
+            <th style="color: {{ el.color }}">Должность</th>
+            <th style="color: {{ el.color }}">Предметы</th>
+            <th style="color: {{ el.color }}">Аудитории</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for el in groups %}
-        <div class="alert alert-warning">
-            <h3 style='color:{{ el.color }};'>{{ el.name }} ({{ el.abbreviation }})</h3>
-            <p style='color:{{ el.color }};'>Должность: {{ el.position }}</p>
-
-            <!-- Вывод предметов в SelectMultiple -->
-            <p style='color:{{ el.color }};'>Предметы:
+        <tr>
+            <td>{{ el.name }}</td>
+            <td>{{ el.abbreviation }}</td>
+            <td>{{ el.position }}</td>
+            <td>
                 {% for subject in el.subjects.all %}
-                       [{{ subject }}]
+                   [{{ subject }}]
                 {% endfor %}
-            </p>
-
-            <!-- Вывод аудиторий в SelectMultiple -->
-            <p style='color:{{ el.color }};'>Аудитории:
+            </td>
+            <td>
                 {% for cabinet in el.cabinets.all %}
-                       [{{ cabinet }}]
+                   [{{ cabinet }}]
                 {% endfor %}
-            </p>
-        </div>
+            </td>
+        </tr>
         {% endfor %}
-    </div>
+    </tbody>
+</table>
 </div>
 
 {% endblock %}

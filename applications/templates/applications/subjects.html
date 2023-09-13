@@ -32,14 +32,24 @@
         <button class="popup-btn" id="open_pop_up">NEW</button>
     </header>
 
-    <div class="output">
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Сокращение</th>
+            <th>Аудитории</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for el in groups %}
-        <div class="alert alert-warning">
-            <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.abbreviation }})</h3>
-            <p style='color:{{ el.color }};'>Аудитории: {{ el.cabinets }}</p>
-        </div>
+        <tr>
+            <td style="color: {{ el.color }}">{{ el.title }}</td>
+            <td style="color: {{ el.color }}">{{ el.abbreviation }}</td>
+            <td style="color: {{ el.color }}">{{ el.cabinets }}</td>
+        </tr>
         {% endfor %}
-    </div>
+    </tbody>
+</table>
 </div>
 
 {% endblock %}
