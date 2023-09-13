@@ -20,11 +20,11 @@ def handle_form(request, app_id, model_class, form_class, template_name):
                 # Сохранение объект Schedule в базе данных
                 schedule = form.save()
 
-                # Получение id созданного объекта
-                scheb_id = schedule.id
-
-                # Вызов функции bells_create с передачей scheb_id
-                bells_create(request, scheb_id)
+                if model_class == Schedules:
+                    # Получение id созданного объекта
+                    scheb_id = schedule.id
+                    # Вызов функции bells_create с передачей scheb_id
+                    bells_create(request, scheb_id)
             else:
                 error = 'Форма была неверной'
     else:
@@ -62,7 +62,7 @@ def bells_create(request, scheb_id):
 
             # Вычисляем время начала и конца урока на основе номера урока
             time_start = start_time.strftime("%H:%M")
-            time_end = (start_time + timedelta(minutes=90)).strftime("%H:%M")
+            time_end = (start_time + timedelta(minutes=80)).strftime("%H:%M")
 
             bell = Bells(
                 lesson=lesson,
@@ -75,7 +75,7 @@ def bells_create(request, scheb_id):
             bell.save()  # Сохраняем объект в базе данных
 
             # Увеличиваем время начала для следующего урока, учитывая перерыв в 10 минут
-            start_time += timedelta(minutes=90 + 10)
+            start_time += timedelta(minutes=80 + 10)
 
 
 

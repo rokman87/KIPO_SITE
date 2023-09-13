@@ -54,7 +54,6 @@ def registration(request):
         return render(request, 'users/registration.html', context)
 
 
-@login_required
 def pagelogin(request):
     uservalue = ''
     passwordvalue = ''

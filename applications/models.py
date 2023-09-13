@@ -2,10 +2,11 @@ from django.db import models
 from users.models import Applications
 from django.utils import timezone
 
+
 class Schedules(models.Model):
     title = models.CharField('Название', max_length=50)
     week_date = models.DateField('Дата')
-    week_days = models.CharField('Дни недели', max_length=50)
+    week_days = models.ManyToManyField('WeekDay')
     lessons_counts = models.CharField('Уроков в день', max_length=50)
     week_type = models.CharField('Тип недели', max_length=50)
     application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='schedules_applications')
@@ -16,6 +17,16 @@ class Schedules(models.Model):
     class Meta:
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписания'
+
+
+class WeekDay(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name = 'День недели'
+        verbose_name_plural = 'Дни недели'
 
 
 class WorkLoads(models.Model):
@@ -96,8 +107,6 @@ class Teachers(models.Model):
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
-
-
 
 
 class Bells(models.Model):

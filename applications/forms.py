@@ -1,5 +1,5 @@
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells
-from django.forms import ModelForm, TextInput, DateInput, SelectMultiple
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WeekDay
+from django.forms import ModelForm, TextInput, DateInput, SelectMultiple, CheckboxSelectMultiple
 from django import forms
 
 
@@ -100,29 +100,12 @@ class SchedulesForm(ModelForm):
     class Meta:
         model = Schedules
         fields = ['title', 'week_date', 'week_days', 'lessons_counts', 'week_type']
-
         widgets = {
-            "title": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Название'
-            }),
-            "week_date": DateInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Дата',
-                'type': 'date'
-            }),
-            "week_days": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Дни недели'
-            }),
-            "lessons_counts": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Уроков в день'
-            }),
-            "week_type": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Тип недели'
-            })
+            "title": TextInput(attrs={'class': 'form-control', 'placeholder': 'Название'}),
+            "week_date": DateInput(attrs={'class': 'form-control', 'placeholder': 'Дата', 'type': 'date'}),
+            "week_days": forms.SelectMultiple(attrs={'class': 'form-control', 'id': 'example-getting-started'}),
+            "lessons_counts": TextInput(attrs={'class': 'form-control', 'placeholder': 'Уроков в день'}),
+            "week_type": TextInput(attrs={'class': 'form-control', 'placeholder': 'Тип недели'}),
         }
 
 

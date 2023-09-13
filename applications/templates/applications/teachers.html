@@ -52,14 +52,10 @@
             <td>{{ el.abbreviation }}</td>
             <td>{{ el.position }}</td>
             <td>
-                {% for subject in el.subjects.all %}
-                   [{{ subject }}]
-                {% endfor %}
+               {{ el.subjects.all|join:", " }}
             </td>
             <td>
-                {% for cabinet in el.cabinets.all %}
-                   [{{ cabinet }}]
-                {% endfor %}
+                {{ el.cabinets.all|join:", " }}
             </td>
         </tr>
         {% endfor %}
