@@ -4,28 +4,49 @@ from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, Schedul
 from users.models import Applications
 
 
-def schedules(request, app_id):
-    groups_db = Schedules.objects.filter(schedule_id=app_id)
-
+# Общая функция для обработки форм и моделей
+def handle_form(request, app_id, model_class, form_class, template_name):
+    instances = model_class.objects.filter(schedule_id=app_id)
     error = ''
+
     if request.method == 'POST':
-        form = SchedulesForm(request.POST)
+        form = form_class(request.POST)
         if form.is_valid():
             applications_instance = Applications.objects.get(pk=app_id)
-            form.instance.schedule_id=applications_instance
+            form.instance.schedule_id = applications_instance
             form.save()
         else:
             error = 'Форма была неверной'
-
-    form = SchedulesForm()
+    else:
+        form = form_class()
 
     data = {
         'form': form,
         'error': error,
         'app_id': app_id,
-        'groups': groups_db,
+        'groups': instances,
     }
-    return render(request, 'applications/schedules.html', data)
+    return render(request, template_name, data)
+
+
+def schedules(request, app_id):
+    return handle_form(request, app_id, Schedules, SchedulesForm, 'applications/schedules.html')
+
+
+def groups(request, app_id):
+    return handle_form(request, app_id, Groups, GroupsForm, 'applications/groups.html')
+
+
+def subjects(request, app_id):
+    return handle_form(request, app_id, Subjects, SubjectsForm, 'applications/subjects.html')
+
+
+def teachers(request, app_id):
+    return handle_form(request, app_id, Teachers, TeachersForm, 'applications/teachers.html')
+
+
+def cabinets(request, app_id):
+    return handle_form(request, app_id, Cabinets, CabinetsForm, 'applications/cabinets.html')
 
 
 def bells(request, app_id):
@@ -46,102 +67,6 @@ def lessons(request, app_id):
 
 def printSchedule(request, app_id):
     return render(request, 'applications/printSchedule.html', {'app_id': app_id})
-
-
-def groups(request, app_id):
-    groups_db = Groups.objects.filter(schedule_id=app_id)
-
-    error = ''
-    if request.method == 'POST':
-        form = GroupsForm(request.POST)
-        if form.is_valid():
-            applications_instance = Applications.objects.get(pk=app_id)
-            form.instance.schedule_id = applications_instance
-            form.save()
-        else:
-            error = 'Форма была неверной'
-
-    form = GroupsForm()
-
-    data = {
-        'form': form,
-        'error': error,
-        'app_id': app_id,
-        'groups': groups_db,
-    }
-    return render(request, 'applications/groups.html', data)
-
-
-def subjects(request, app_id):
-    groupsDB = Subjects.objects.filter(schedule_id=app_id)
-
-    error = ''
-    if request.method == 'POST':
-        form = SubjectsForm(request.POST)
-        if form.is_valid():
-            applications_instance = Applications.objects.get(pk=app_id)
-            form.instance.schedule_id = applications_instance
-            form.save()
-        else:
-            error = 'Форма была неверной'
-
-    form = SubjectsForm()
-
-    data = {
-        'form': form,
-        'error': error,
-        'app_id': app_id,
-        'groups': groupsDB,
-    }
-    return render(request, 'applications/subjects.html', data)
-
-
-def teachers(request, app_id):
-    groups_db = Teachers.objects.filter(schedule_id=app_id)
-
-    error = ''
-    if request.method == 'POST':
-        form = TeachersForm(request.POST)
-        if form.is_valid():
-            applications_instance = Applications.objects.get(pk=app_id)
-            form.instance.schedule_id = applications_instance
-            form.save()
-        else:
-            error = 'Форма была неверной'
-
-    form = TeachersForm()
-
-    data = {
-        'form': form,
-        'error': error,
-        'app_id': app_id,
-        'groups': groups_db,
-    }
-    return render(request, 'applications/teachers.html', data)
-
-
-def cabinets(request, app_id):
-    groups_db = Cabinets.objects.filter(schedule_id=app_id)
-
-    error = ''
-    if request.method == 'POST':
-        form = CabinetsForm(request.POST)
-        if form.is_valid():
-            applications_instance = Applications.objects.get(pk=app_id)
-            form.instance.schedule_id = applications_instance
-            form.save()
-        else:
-            error = 'Форма была неверной'
-
-    form = CabinetsForm()
-
-    data = {
-        'form': form,
-        'error': error,
-        'app_id': app_id,
-        'groups': groups_db,
-    }
-    return render(request, 'applications/cabinets.html', data)
 
 
 def types_lessons(request, app_id):
