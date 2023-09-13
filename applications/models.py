@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import Applications
-
+from django.utils import timezone
 
 class Schedules(models.Model):
     title = models.CharField('Название', max_length=50)
@@ -8,7 +8,7 @@ class Schedules(models.Model):
     week_days = models.CharField('Дни недели', max_length=50)
     lessons_counts = models.CharField('Уроков в день', max_length=50)
     week_type = models.CharField('Тип недели', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='schedules_applications')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='schedules_applications')
 
     def __str__(self):
         return self.title
@@ -24,7 +24,7 @@ class WorkLoads(models.Model):
     teacher = models.CharField('Преподаватель', max_length=50)
     cabinet = models.CharField('Аудитория', max_length=50)
     lessons = models.CharField('Уроков', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='WorkLoads')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='WorkLoads')
 
     def __str__(self):
         return self.name
@@ -40,7 +40,7 @@ class Groups(models.Model):
     students_count = models.CharField('Количество учащихся', max_length=50)
     cabinets = models.CharField('Аудитории', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Groups')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Groups')
 
     def __str__(self):
         return self.title
@@ -55,7 +55,7 @@ class Subjects(models.Model):
     abbreviation = models.CharField('Сокращение', max_length=50)
     cabinets = models.CharField('Аудитории', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Subjects')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Subjects')
 
     def __str__(self):
         return self.title
@@ -71,7 +71,7 @@ class Cabinets(models.Model):
     seat_number = models.CharField('Количество мест', max_length=50)
     building = models.CharField('Корпус', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Cabinets')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Cabinets')
 
     def __str__(self):
         return self.title
@@ -88,7 +88,7 @@ class Teachers(models.Model):
     subjects = models.ManyToManyField(Subjects)
     cabinets = models.ManyToManyField(Cabinets)
     color = models.CharField('Цвет', max_length=50)
-    schedule_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Teachers')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Teachers')
 
     def __str__(self):
         return self.name
@@ -96,3 +96,21 @@ class Teachers(models.Model):
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
+
+
+
+
+class Bells(models.Model):
+    lesson = models.CharField('Урок', max_length=50)
+    time_start = models.TimeField('Начало урока', default=timezone.now)
+    time_end = models.TimeField('Конец урока', default=timezone.now)
+    week_day = models.CharField('День недели', max_length=50)
+    type = models.CharField('Тип', max_length=50)
+    schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='Bells')
+
+    def __str__(self):
+        return f'{self.schedule_id} - {self.week_day} - {self.lesson}'
+
+    class Meta:
+        verbose_name = 'Звонок'
+        verbose_name_plural = 'Звонки'

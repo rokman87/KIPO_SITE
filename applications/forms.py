@@ -1,5 +1,5 @@
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules
-from django.forms import ModelForm, TextInput, DateInput, CheckboxSelectMultiple, SelectMultiple, Select
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells
+from django.forms import ModelForm, TextInput, DateInput, SelectMultiple
 from django import forms
 
 
@@ -120,6 +120,28 @@ class SchedulesForm(ModelForm):
                 'placeholder': 'Уроков в день'
             }),
             "week_type": TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Тип недели'
+            })
+        }
+
+
+class BellsForm(ModelForm):
+    class Meta:
+        model = Bells
+        fields = ['time_start', 'time_end', 'type']
+
+        widgets = {
+            "time_start": TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Начало урока'
+            }),
+            "time_end": DateInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Конец урока',
+                'type': 'date'
+            }),
+            "type": TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Тип недели'
             })
