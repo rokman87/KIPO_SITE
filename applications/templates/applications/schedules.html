@@ -17,7 +17,7 @@
                 {{ form.week_days }}<br>
                 {{ form.lessons_counts }}<br>
                 {{ form.week_type }}<br>
-
+                <input type="hidden" name="action" value="ins">
                 <button class="btn btn-success" type="submit">Добавить</button>
             </form>
             <div class="pop_up_close" id="pop_up_close">&#10006</div>
@@ -40,11 +40,17 @@
             <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
             <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
             <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="del">
+                <input type="hidden" name="element_id" value="{{ el.id }}">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
         </div>
         {% endfor %}
     </div>
 </div>
-
 
 
 {% endblock %}
