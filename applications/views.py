@@ -108,7 +108,8 @@ def bells(request, app_id):
 
     data={
         'bells': bells,
-        'selected_day': selected_day
+        'selected_day': selected_day,
+        'app_id': app_id,
     }
 
     return render(request, 'applications/bells.html', data)
