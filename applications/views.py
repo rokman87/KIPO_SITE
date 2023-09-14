@@ -3,6 +3,8 @@ from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, Work
 from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 
 # Общая функция для обработки форм и моделей
@@ -121,6 +123,11 @@ def delete_schedule(request, app_id, element_id, table, elem):
         if element_id:
             # Удаление элемента из таблицы schedules
             table.objects.filter(id=element_id).delete()
+
+            # Очистить куки 'selectedElementId'
+            response = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            response.delete_cookie('selectedElementId')
+            return response
     return redirect(f'/applications/{app_id}/{elem}')
 
 
@@ -196,9 +203,14 @@ def settings(request, app_id):
 
 
 def find_week_title(request):
-    sched_id = request.COOKIES.get('selectedElementId')  # Замените 'app_id' на фактическое имя куки
     week_title = None
-    sched_instance = Schedules.objects.get(id=sched_id)
-    week_title = sched_instance.title
-
+    if request.COOKIES.get('selectedElementId'):
+        sched_id = request.COOKIES.get('selectedElementId')
+        sched_instance = Schedules.objects.get(id=sched_id)
+        week_title = sched_instance.title
+    else:
+        week_title = 'Не выбрано!'
     return week_title
+
+def clear_cookie(request):
+    response.delete_cookie('selectedElementId')
