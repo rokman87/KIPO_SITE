@@ -32,9 +32,8 @@ class GroupsForm(ModelForm):
 class SubjectsForm(forms.ModelForm):
     cabinets = forms.ModelChoiceField(
         queryset=Cabinets.objects.all(),
-        widget=forms.Select(attrs={
-            'class': 'form-control',
-            'placeholder': 'Аудитории'
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-control'
         })
     )
 
@@ -76,8 +75,10 @@ class TeachersForm(ModelForm):
 
 BUILDING_CHOICES = [
     ('Садовая 218', 'Садовая 218'),
-    ('Красноармейская', 'Красноармейская'),
-    ('Третий корпус', 'Третий корпус'),
+    ('Красноармейская 51', 'Красноармейская 51'),
+    ('Новокузнечная 67', 'Новокузнечная 67'),
+    ('Леваневского 187/1', 'Леваневского 187/1'),
+    ('Тополинная аллея 2/1', 'Тополинная аллея 2/1'),
 ]
 
 

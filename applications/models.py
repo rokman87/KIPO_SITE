@@ -24,47 +24,32 @@ class WeekDay(models.Model):
 
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name = 'День недели'
         verbose_name_plural = 'Дни недели'
 
 
-class WorkLoads(models.Model):
-    name = models.CharField('Предмет', max_length=50)
-    group = models.CharField('Группа', max_length=50)
-    teacher = models.CharField('Преподаватель', max_length=50)
-    cabinet = models.CharField('Аудитория', max_length=50)
-    lessons = models.CharField('Уроков', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='WorkLoads')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Нагрузка'
-        verbose_name_plural = 'Нагрузки'
-
-
-class Groups(models.Model):
+class Cabinets(models.Model):
     title = models.CharField('Название', max_length=50)
     abbreviation = models.CharField('Сокращение', max_length=50)
-    students_count = models.CharField('Количество учащихся', max_length=50)
-    cabinets = models.CharField('Аудитории', max_length=50)
+    seat_number = models.PositiveIntegerField('Количество мест')
+    building = models.CharField('Корпус', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Groups')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Cabinets')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Группа'
-        verbose_name_plural = 'Группы'
+        verbose_name = 'Аудитория'
+        verbose_name_plural = 'Аудитории'
 
 
 class Subjects(models.Model):
     title = models.CharField('Название', max_length=50)
     abbreviation = models.CharField('Сокращение', max_length=50)
-    cabinets = models.CharField('Аудитории', max_length=50)
+    cabinets = models.ManyToManyField(Cabinets)
     color = models.CharField('Цвет', max_length=50)
     application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Subjects')
 
@@ -76,20 +61,20 @@ class Subjects(models.Model):
         verbose_name_plural = 'Предметы'
 
 
-class Cabinets(models.Model):
+class Groups(models.Model):
     title = models.CharField('Название', max_length=50)
     abbreviation = models.CharField('Сокращение', max_length=50)
-    seat_number = models.CharField('Количество мест', max_length=50)
-    building = models.CharField('Корпус', max_length=50)
+    students_count = models.CharField('Количество учащихся', max_length=50)
+    cabinets = models.ManyToManyField(Cabinets)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Cabinets')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Groups')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Аудитория'
-        verbose_name_plural = 'Аудитории'
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
 
 
 class Teachers(models.Model):
@@ -115,7 +100,7 @@ class Bells(models.Model):
     time_end = models.TimeField('Конец урока', default=timezone.now)
     week_day = models.CharField('День недели', max_length=50)
     type = models.CharField('Тип', max_length=50)
-    schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='Bells')
+    schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='bells')
 
     def __str__(self):
         return f'{self.schedule_id} - {self.week_day} - {self.lesson}'
@@ -123,3 +108,19 @@ class Bells(models.Model):
     class Meta:
         verbose_name = 'Звонок'
         verbose_name_plural = 'Звонки'
+
+
+class WorkLoads(models.Model):
+    subjects = models.ManyToManyField(Subjects)
+    groups = models.ManyToManyField(Groups)
+    teachers = models.ManyToManyField(Teachers)
+    cabinets = models.ManyToManyField(Cabinets)
+    lessons_count = models.PositiveIntegerField()
+    schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='workloads')
+
+    def __str__(self):
+        return f'{self.subjects} - {self.groups} - {self.teachers}'
+
+    class Meta:
+        verbose_name = 'Нагрузка'
+        verbose_name_plural = 'Нагрузки'
