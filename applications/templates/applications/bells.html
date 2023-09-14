@@ -23,23 +23,22 @@
 </div>
 
     <table class="table">
-    <thead>
-        <tr>
-            <th>Урок</th>
-            <th>Начало урока</th>
-            <th>Конец урока</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for bell in bells %}
-        <tr>
-            <td>{{ bell.lesson }}</td>
-            <td>{{ bell.time_start }}</td>
-            <td>{{ bell.time_end }}</td>
-
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th>Урок</th>
+                <th>Начало урока</th>
+                <th>Конец урока</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bell in bells %}
+            <tr>
+                <td>{{ bell.lesson }}</td>
+                <td>{{ bell.time_start }}</td>
+                <td>{{ bell.time_end }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

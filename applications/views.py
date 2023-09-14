@@ -16,20 +16,20 @@ def handle_form(request, app_id, model_class, form_class, template_name):
             if form.is_valid():
                 applications_instance = Applications.objects.get(pk=app_id)
                 form.instance.application_id = applications_instance
-
-                # Сохранение объект Schedule в базе данных
-                schedule = form.save()
-
+                form.save()
                 if model_class == Schedules:
+                    # Сохранение объект Schedule в базе данных
+                    schedule = form.save()
+
                     # Получение id созданного объекта
                     scheb_id = schedule.id
+
                     # Вызов функции bells_create с передачей scheb_id
                     bells_create(request, scheb_id)
             else:
                 error = 'Форма была неверной'
     else:
         form = form_class()
-
 
     data = {
         'form': form,
@@ -62,7 +62,7 @@ def bells_create(request, scheb_id):
 
             # Вычисляем время начала и конца урока на основе номера урока
             time_start = start_time.strftime("%H:%M")
-            time_end = (start_time + timedelta(minutes=80)).strftime("%H:%M")
+            time_end = (start_time + timedelta(minutes=90)).strftime("%H:%M")
 
             bell = Bells(
                 lesson=lesson,
@@ -75,10 +75,7 @@ def bells_create(request, scheb_id):
             bell.save()  # Сохраняем объект в базе данных
 
             # Увеличиваем время начала для следующего урока, учитывая перерыв в 10 минут
-            start_time += timedelta(minutes=80 + 10)
-
-
-
+            start_time += timedelta(minutes=90 + 10)
 
 
 def delete_schedule(request, app_id, element_id, table, elem):
@@ -87,6 +84,7 @@ def delete_schedule(request, app_id, element_id, table, elem):
             # Удаление элемента из таблицы schedules
             table.objects.filter(id=element_id).delete()
     return redirect(f'/applications/{app_id}/{elem}')
+
 
 # Измените функцию schedules
 def schedules(request, app_id):

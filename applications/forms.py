@@ -32,8 +32,9 @@ class GroupsForm(ModelForm):
 class SubjectsForm(forms.ModelForm):
     cabinets = forms.ModelChoiceField(
         queryset=Cabinets.objects.all(),
-        widget=forms.SelectMultiple(attrs={
-            'class': 'form-control'
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+            'placeholder': 'Аудитории'
         })
     )
 

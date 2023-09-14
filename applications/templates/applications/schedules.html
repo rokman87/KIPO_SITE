@@ -2,17 +2,6 @@
 {% load static %}
 
 {% block title %}Расписания{% endblock %}
-{% block links %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-<link rel="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"
-      type="text/css"/>{% endblock %}
 {% block content %}
 
 
@@ -48,7 +37,7 @@
         {% for el in groups %}
         <div class="alert alert-warning">
             <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.week_date }})</h3>
-            <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days.all|join:", " }}</p>
+            <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
             <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
             <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
 
