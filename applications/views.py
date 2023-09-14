@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells
-from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
+from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
 
@@ -30,6 +30,41 @@ def handle_form(request, app_id, model_class, form_class, template_name):
     else:
         form = form_class()
 
+    data = {
+        'form': form,
+        'error': error,
+        'app_id': app_id,
+        'groups': instances,
+    }
+
+    return render(request, template_name, data)
+
+
+# Общая функция для обработки форм и моделей
+# Общая функция для обработки форм и моделей
+def handle_form_schedule(request, app_id, model_class, form_class, template_name):
+    instances = model_class.objects.filter(schedule_id__application_id=app_id)
+    error = ''
+
+    if request.method == 'POST':
+        if 'action' in request.POST and request.POST['action'] == 'ins':
+            form = form_class(request.POST)
+            if form.is_valid():
+                applications_instance = Applications.objects.get(pk=app_id)
+                form.instance.schedule_id.application_id = applications_instance
+
+                # Сохранение объекта в базе данных
+                form.save()
+
+                if model_class == Schedules:
+                    # Получение id созданного объекта
+                    scheb_id = form.instance.id
+                    # Вызов функции bells_create с передачей scheb_id
+                    bells_create(request, scheb_id)
+            else:
+                error = 'Форма была неверной'
+    else:
+        form = form_class()
 
     data = {
         'form': form,
@@ -78,15 +113,13 @@ def bells_create(request, scheb_id):
             start_time += timedelta(minutes=80 + 10)
 
 
-
-
-
 def delete_schedule(request, app_id, element_id, table, elem):
     if request.method == 'POST':
         if element_id:
             # Удаление элемента из таблицы schedules
             table.objects.filter(id=element_id).delete()
     return redirect(f'/applications/{app_id}/{elem}')
+
 
 # Измените функцию schedules
 def schedules(request, app_id):
@@ -138,7 +171,7 @@ def work_times(request, app_id):
 
 
 def workloads(request, app_id):
-    return render(request, 'applications/workloads.html', {'app_id': app_id})
+    return handle_form_schedule(request, app_id, WorkLoads, WorkLoadsForm, 'applications/workloads.html')
 
 
 def lessons(request, app_id):

@@ -9,7 +9,7 @@ class Schedules(models.Model):
     week_days = models.ManyToManyField('WeekDay')
     lessons_counts = models.CharField('Уроков в день', max_length=50)
     week_type = models.CharField('Тип недели', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='schedules_applications')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='schedules_app')
 
     def __str__(self):
         return self.title
@@ -36,7 +36,7 @@ class Cabinets(models.Model):
     seat_number = models.PositiveIntegerField('Количество мест')
     building = models.CharField('Корпус', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Cabinets')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='cabinets')
 
     def __str__(self):
         return self.title
@@ -51,7 +51,7 @@ class Subjects(models.Model):
     abbreviation = models.CharField('Сокращение', max_length=50)
     cabinets = models.ManyToManyField(Cabinets)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Subjects')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='subjects')
 
     def __str__(self):
         return self.title
@@ -65,9 +65,9 @@ class Groups(models.Model):
     title = models.CharField('Название', max_length=50)
     abbreviation = models.CharField('Сокращение', max_length=50)
     students_count = models.CharField('Количество учащихся', max_length=50)
-    cabinets = models.ManyToManyField(Cabinets)
+    cabinets = models.CharField('Кабинеты', max_length=50)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Groups')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='groups')
 
     def __str__(self):
         return self.title
@@ -84,7 +84,7 @@ class Teachers(models.Model):
     subjects = models.ManyToManyField(Subjects)
     cabinets = models.ManyToManyField(Cabinets)
     color = models.CharField('Цвет', max_length=50)
-    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='Teachers')
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE, related_name='teachers')
 
     def __str__(self):
         return self.name

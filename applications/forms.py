@@ -1,4 +1,4 @@
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WeekDay
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
 from django.forms import ModelForm, TextInput, DateInput, SelectMultiple, CheckboxSelectMultiple
 from django import forms
 
@@ -128,5 +128,34 @@ class BellsForm(ModelForm):
             "type": TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Тип недели'
+            })
+        }
+
+
+class WorkLoadsForm(ModelForm):
+    class Meta:
+        model = WorkLoads
+        fields = ['subjects', 'groups', 'teachers', 'cabinets', 'lessons_count']
+
+        widgets = {
+            "subjects": SelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': '`Предметы`',
+            }),
+            "groups": SelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': 'Группы',
+            }),
+            "teachers": SelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': 'Преподаватель',
+            }),
+            "cabinets": SelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': 'Кабинеты',
+            }),
+            "lessons_count": TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Количество уроков'
             })
         }
