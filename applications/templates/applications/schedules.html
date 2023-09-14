@@ -35,22 +35,23 @@
     <div class="output">
         <span>{{ error }}</span>
         {% for el in groups %}
-        <div class="alert alert-warning">
-            <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.week_date }})</h3>
-            <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
-            <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
-            <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
+    {% if el.schedule_id == selected_element_id %}
+    <div class="alert alert-warning">
+        <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.week_date }})</h3>
+        <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
+        <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
+        <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
 
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="del">
-                <input type="hidden" name="element_id" value="{{ el.id }}">
-                <button type="submit" class="btn btn-danger">Удалить</button>
-                <button type="button" class="btn btn-danger select-schedule" data-element-id="{{ el.id }}">Выбрать
-                </button>
-            </form>
-        </div>
-        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="del">
+            <input type="hidden" name="element_id" value="{{ el.id }}">
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <button type="button" class="btn btn-danger select-schedule" data-element-id="{{ el.id }}">Выбрать</button>
+        </form>
+    </div>
+    {% endif %}
+{% endfor %}
     </div>
 </div>
 

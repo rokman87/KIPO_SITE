@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
+    find_week_title = find_week(request)
     instances = model_class.objects.filter(application_id=app_id)
     error = ''
 
@@ -36,11 +37,13 @@ def handle_form(request, app_id, model_class, form_class, template_name):
         'error': error,
         'app_id': app_id,
         'groups': instances,
+        'title': week_title
     }
 
     return render(request, template_name, data)
 
 def handle_form_sched(request, app_id, model_class, form_class, template_name):
+    find_week_title = find_week(request)
     instances = model_class.objects.filter(schedule_id=app_id)
     error = ''
 
@@ -70,6 +73,7 @@ def handle_form_sched(request, app_id, model_class, form_class, template_name):
         'error': error,
         'app_id': app_id,
         'groups': instances,
+        'title': week_title
     }
 
     return render(request, template_name, data)
@@ -148,6 +152,7 @@ def cabinets(request, app_id):
 
 def bells(request, app_id):
     selected_day = request.GET.get('day')  # Получаем выбранный день из строки запроса
+    find_week_title = find_week(request)
     if selected_day == None:
         selected_day = 'Понедельник'
 
@@ -160,6 +165,7 @@ def bells(request, app_id):
         'bells': bells,
         'selected_day': selected_day,
         'app_id': app_id,
+        'title': week_title
     }
 
     return render(request, 'applications/bells.html', data)
@@ -187,3 +193,12 @@ def publication(request, app_id):
 
 def settings(request, app_id):
     return render(request, 'applications/settings.html', {'app_id': app_id})
+
+
+def find_week_title(request):
+    sched_id = request.COOKIES.get('selectedElementId')  # Замените 'app_id' на фактическое имя куки
+    week_title = None
+    sched_instance = Schedules.objects.get(id=sched_id)
+    week_title = sched_instance.title
+
+    return week_title
