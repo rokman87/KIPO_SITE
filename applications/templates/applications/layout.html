@@ -20,13 +20,15 @@
 
         <h3>{{ title }}</h3>
     </ul>
-    <ul class="nav">
+    {% if title != "Не выбрано!" %}
+    <ul class="nav" id="sched-elem" >
         <li><a href="/applications/{{ app_id }}/bells">Звонки</a></li>
         <!--        <li><a href="/applications/{{ app_id }}/work_times">Рабочее время</a></li>-->
         <li><a href="/applications/{{ app_id }}/workloads">Нагрузка</a></li>
         <li><a href="/applications/{{ app_id }}/lessons">Сетка уроков</a></li>
         <li><a href="/applications/{{ app_id }}/print/schedule">Печать</a></li>
     </ul>
+    {% endif %}
     <ul class="nav">
         <li><a href="/applications/{{ app_id }}/groups">Группы</a></li>
         <li><a href="/applications/{{ app_id }}/subjects">Предметы</a></li>
