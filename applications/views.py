@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
-    find_week_title = find_week(request)
+    week_title = find_week_title(request)
     instances = model_class.objects.filter(application_id=app_id)
     error = ''
 
@@ -43,7 +43,7 @@ def handle_form(request, app_id, model_class, form_class, template_name):
     return render(request, template_name, data)
 
 def handle_form_sched(request, app_id, model_class, form_class, template_name):
-    find_week_title = find_week(request)
+    week_title = find_week_title(request)
     instances = model_class.objects.filter(schedule_id=app_id)
     error = ''
 
@@ -152,7 +152,7 @@ def cabinets(request, app_id):
 
 def bells(request, app_id):
     selected_day = request.GET.get('day')  # Получаем выбранный день из строки запроса
-    find_week_title = find_week(request)
+    week_title = find_week_title(request)
     if selected_day == None:
         selected_day = 'Понедельник'
 

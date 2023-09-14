@@ -11,5 +11,6 @@ selectScheduleButtons.forEach(function(button) {
     document.cookie = `selectedElementId=${elementId}; domain=127.0.0.1; path=/`;
 
     // Можно также добавить код для обновления страницы или выполнения других действий после установки куки.
+    location.reload();
   });
 });
