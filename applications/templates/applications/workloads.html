@@ -1,7 +1,67 @@
 {% extends 'applications/layout.html' %}
+{% load static %}
 
-{% block title %}Нагрузка{% endblock %}
-
+{% block title %}Нагрузки{% endblock %}
 {% block content %}
+
+
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Нагрузку</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <p>Предметы:</p>
+                {{ form.subjects }}<br>
+                <p>Группы:</p>
+                {{ form.groups }}<br>
+                <p>Преподаватель:</p>
+                {{ form.teachers }}<br>
+                <p>Кабинеты:</p>
+                {{ form.cabinets }}<br>
+                <p>Количество уроков:</p>
+                {{ form.lessons_count }}<br>
+                <span>{{ error }}</span>
+                <input type="hidden" name="action" value="ins">
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="features">
+    <header>
+        <h1>Нагрузки</h1>
+        <button class="popup-btn" id="open_pop_up">NEW</button>
+    </header>
+
+    <table class="table" border="1">
+        <thead>
+        <tr>
+            <th>Предметы</th>
+            <th>Группы</th>
+            <th>Преподаватели</th>
+            <th>Кабинеты</th>
+            <th>Количество уроков</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for workload in workloads %}
+        <tr>
+            <td>{{ workload.subjects.all|join:", " }}</td>
+            <td>{{ workload.groups.all|join:", " }}</td>
+            <td>{{ workload.teachers.all|join:", " }}</td>
+            <td>{{ workload.cabinets.all|join:", " }}</td>
+            <td>{{ workload.lessons_count }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </body>
+    </html>
+</div>
 
 {% endblock %}
