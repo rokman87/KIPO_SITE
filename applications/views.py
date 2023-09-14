@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells
-from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
+from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
 
@@ -8,6 +8,40 @@ from datetime import datetime, timedelta
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
     instances = model_class.objects.filter(application_id=app_id)
+    error = ''
+
+    if request.method == 'POST':
+        if 'action' in request.POST and request.POST['action'] == 'ins':
+            form = form_class(request.POST)
+            if form.is_valid():
+                applications_instance = Applications.objects.get(pk=app_id)
+                form.instance.application_id = applications_instance
+                form.save()
+                if model_class == Schedules:
+                    # Сохранение объект Schedule в базе данных
+                    schedule = form.save()
+
+                    # Получение id созданного объекта
+                    scheb_id = schedule.id
+
+                    # Вызов функции bells_create с передачей scheb_id
+                    bells_create(request, scheb_id)
+            else:
+                error = 'Форма была неверной'
+    else:
+        form = form_class()
+
+    data = {
+        'form': form,
+        'error': error,
+        'app_id': app_id,
+        'groups': instances,
+    }
+
+    return render(request, template_name, data)
+
+def handle_form_sched(request, app_id, model_class, form_class, template_name):
+    instances = model_class.objects.filter(schedule_id=app_id)
     error = ''
 
     if request.method == 'POST':
@@ -136,11 +170,7 @@ def work_times(request, app_id):
 
 
 def workloads(request, app_id):
-    return render(request, 'applications/workloads.html', {'app_id': app_id})
-
-
-def lessons(request, app_id):
-    return render(request, 'applications/lessons.html', {'app_id': app_id})
+    return handle_form_sched(request, app_id, WorkLoads, WorkLoadsForm, 'applications/workloads.html')
 
 
 def printSchedule(request, app_id):

@@ -1,7 +1,55 @@
 {% extends 'applications/layout.html' %}
+{% load static %}
 
-{% block title %}Нагрузка{% endblock %}
-
+{% block title %}Нагрузки{% endblock %}
 {% block content %}
+
+
+<div class="pop_up" id="pop_up">
+    <div class="pop_up_container" id="pop_up_container">
+        <div class="pop_up_body" id="pop_up_body">
+            <p>Добавить Нагрузку</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <p>Предметы</p>
+                {{ form.subjects }}<br>
+                <p>Группы</p>
+                {{ form.groups }}<br>
+                <p>Преподаватель</p>
+                {{ form.teachers }}<br>
+                <p>Кабинеты</p>
+                {{ form.cabinets }}<br>
+                <p>Количество уроков</p>
+                {{ form.lessons_count }}<br>
+                <input type="hidden" name="action" value="ins">
+                <button class="btn btn-success" type="submit">Добавить</button>
+            </form>
+            <div class="pop_up_close" id="pop_up_close">&#10006</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="features">
+    <header>
+        <h1>Нагрузки</h1>
+        <button class="popup-btn" id="open_pop_up">NEW</button>
+    </header>
+
+    <div class="output">
+        <span>{{ error }}</span>
+        {% for el in groups %}
+        <div class="alert alert-warning">
+            <h3 style='color:{{ el.color }};'>{{ el.subjects }} ({{ el.groups }})</h3>
+            <p style='color:{{ el.color }};'>Преподаватель: {{ el.teachers }}</p>
+            <p style='color:{{ el.color }};'>Кабинеты: {{ el.cabinets }}</p>
+            <p style='color:{{ el.color }};'>количество пар: {{ el.lessons_count }}</p>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
 {% endblock %}

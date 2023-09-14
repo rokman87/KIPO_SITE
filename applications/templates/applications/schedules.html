@@ -46,6 +46,8 @@
                 <input type="hidden" name="action" value="del">
                 <input type="hidden" name="element_id" value="{{ el.id }}">
                 <button type="submit" class="btn btn-danger">Удалить</button>
+                <button type="button" class="btn btn-danger select-schedule" data-element-id="{{ el.id }}">Выбрать
+                </button>
             </form>
         </div>
         {% endfor %}
