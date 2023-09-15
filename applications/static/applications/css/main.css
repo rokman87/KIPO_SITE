@@ -1,18 +1,28 @@
+:root {
+  --main-background: #a5a06e;
+  --second-background: blanchedalmond;
+  --border: black;
+  --text: #333;
+  --popup-background: rgba(0,0,0,0.8);
+  --white: #fff3cd;
+  --output-background-color: transparent;
+  --table-border-color: black;
+}
+
+
 /*Верхняя панель*/
 header {
     display: flex;
     justify-content: center;
     min-width: 100%;
-    background-color: blanchedalmond;
+    background-color: var(--second-background);
     padding: 10px 0px 10px 0px;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--border);
 }
-
-
 
 body {
     display: flex;
-    background-color: #a5a06e;
+    background-color: var(--main-background);
 }
 .features {
     width: 100%;
@@ -23,13 +33,13 @@ body {
 .sidebar {
     float: left;
     width: 10%;
-    background-color: blanchedalmond;
+    background-color: var(--second-background);
     padding: 2px 5px 0px 15px;
     height: 100vh;
-    border-right: 2px solid black;
+    border-right: 2px solid var(--border);
 }
 .nav {
-    border-top: 1px solid black;
+    border-top: 1px solid var(--border);
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -40,7 +50,7 @@ body {
 .nav li a {
     display: block;
     text-decoration: none;
-    color: #333;
+    color: var(--text);
     padding: 5px;
     border-radius: 5px;
 }
@@ -62,10 +72,10 @@ aside .logo{
     font-family: Monserrat;
     background-color: #fff3cd;
     border-radius: 10px;
-    border-color: #fff3cd;
+    border-color: var(--border);
     text-decoration: none;
     font-weight: 500;
-    color: #6d2626;
+    color: var(--text);
 }
 .pop_up{
     display: none;
@@ -74,7 +84,7 @@ aside .logo{
     position: fixed;
     left:0;
     right:0;
-    background-color:rgba(0,0,0,0.8);
+    background-color:var(--popup-background);
     z-index:2;
 }
 .pop_up.active{
@@ -88,7 +98,7 @@ aside .logo{
 .pop_up_body {
     margin: auto;
     width: 500px;
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 10px;
     text-align: center;
     padding: 20px 15px 40px 15px;
@@ -123,12 +133,12 @@ button#open_pop_up {
 .week-selector a {
     color: black;
     text-decoration: none;
-    border: 1px solid black;
+    border: 1px solid var(--border);
     padding: 1%;
     margin: auto;
 }
 .week-selector {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--border);
     height: 50px;
     margin-top: 2%;
 }
@@ -139,4 +149,11 @@ table.table {
     width: 80%;
     margin: auto;
 }
-
+button.btn.btn-danger.select-schedule {
+    background-color: darkgreen;
+    border-color: antiquewhite;
+}
+.form-control {
+    background-color: #fff3cd;
+    border: 1px solid black;
+}
