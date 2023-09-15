@@ -37,10 +37,11 @@
    <table class="table">
     <thead>
         <tr>
-            <th style="color:{{ el.color }}">Название</th>
-            <th style="color:{{ el.color }}">Сокращение</th>
-            <th style="color:{{ el.color }}">Количество мест</th>
-            <th style="color:{{ el.color }}">Корпус</th>
+            <th>Название</th>
+            <th>Сокращение</th>
+            <th>Количество мест</th>
+            <th>Корпус</th>
+            <th>Цвет</th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +51,7 @@
             <td>{{ el.abbreviation }}</td>
             <td>{{ el.seat_number }}</td>
             <td>{{ el.building }}</td>
+            <td style="background-color:{{ el.color }}"></td>
         </tr>
         {% endfor %}
     </tbody>

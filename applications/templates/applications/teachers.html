@@ -40,11 +40,13 @@
    <table class="table">
     <thead>
         <tr>
-            <th style="color: {{ el.color }}">Название</th>
-            <th style="color: {{ el.color }}">Сокращение</th>
-            <th style="color: {{ el.color }}">Должность</th>
-            <th style="color: {{ el.color }}">Предметы</th>
-            <th style="color: {{ el.color }}">Аудитории</th>
+            <th>Название</th>
+            <th>Сокращение</th>
+            <th>Должность</th>
+            <th>Предметы</th>
+            <th>Аудитории</th>
+            <th>Цвет</th>
+
         </tr>
     </thead>
     <tbody>
@@ -59,6 +61,7 @@
             <td>
                 {{ el.cabinets.all|join:", " }}
             </td>
+            <td style="background-color:{{ el.color }}"></td>
         </tr>
         {% endfor %}
     </tbody>

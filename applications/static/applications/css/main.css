@@ -145,10 +145,7 @@ button#open_pop_up {
 p {
     margin: auto;
 }
-table.table {
-    width: 80%;
-    margin: auto;
-}
+
 button.btn.btn-danger.select-schedule {
     background-color: darkgreen;
     border-color: antiquewhite;
@@ -156,4 +153,18 @@ button.btn.btn-danger.select-schedule {
 .form-control {
     background-color: #fff3cd;
     border: 1px solid black;
+}
+
+
+/*Таблица*/
+.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    background-color: var(--bs-table-bg);
+    border: 1px solid black;
+    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+}
+
+table.table {
+    width: 100%;
+    margin: auto;
 }

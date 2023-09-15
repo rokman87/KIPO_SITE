@@ -40,15 +40,17 @@
             <th>Сокращение</th>
             <th>Учащихся</th>
             <th>Аудитории</th>
+            <th>Цвет</th>
         </tr>
     </thead>
     <tbody>
         {% for el in groups %}
         <tr>
-            <td style="color: {{ el.color }}">{{ el.title }}</td>
-            <td style="color: {{ el.color }}">{{ el.abbreviation }}</td>
-            <td style="color: {{ el.color }}">{{ el.students_count }}</td>
-            <td style="color: {{ el.color }}">{{ el.cabinets }}</td>
+            <td>{{ el.title }}</td>
+            <td>{{ el.abbreviation }}</td>
+            <td>{{ el.students_count }}</td>
+            <td>{{ el.cabinets }}</td>
+            <td style="background-color:{{ el.color }}"></td>
         </tr>
         {% endfor %}
     </tbody>
