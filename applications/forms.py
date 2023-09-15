@@ -139,6 +139,7 @@ class WorkLoadsForm(ModelForm):
                 'placeholder': 'Предмет'
             })
     )
+
     class Meta:
         model = WorkLoads
 
@@ -162,3 +163,8 @@ class WorkLoadsForm(ModelForm):
                 'placeholder': 'Количество уроков'
             })
         }
+
+
+class BellForm(forms.Form):
+    time_start = forms.TimeField(label='Начало урока')
+    time_end = forms.TimeField(label='Конец урока')

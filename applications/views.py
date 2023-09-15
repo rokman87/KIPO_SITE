@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
-from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm
+from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm, BellForm
 from users.models import Applications
 from datetime import datetime, timedelta
 from django.http import HttpResponse
@@ -152,13 +152,15 @@ def cabinets(request, app_id):
 def bells(request, app_id):
     selected_day = request.GET.get('day')  # Получаем выбранный день из строки запроса
     week_title = find_week_title(request)
+    sched_id = request.COOKIES.get('selectedElementId')
     if selected_day == None:
         selected_day = 'Понедельник'
 
     if selected_day:
-        bells = Bells.objects.filter(schedule_id__application_id=app_id, week_day=selected_day)
+
+        bells = Bells.objects.filter(schedule_id=sched_id, week_day=selected_day)
     else:
-        bells = Bells.objects.filter(schedule_id__application_id=app_id)
+        bells = Bells.objects.filter(schedule_id=sched_id)
 
     data = {
         'bells': bells,
@@ -168,6 +170,26 @@ def bells(request, app_id):
     }
 
     return render(request, 'applications/bells.html', data)
+
+
+def edit_bells(request):
+    bells = Bell.objects.all()
+    form = BellForm()
+
+    if request.method == 'POST':
+        form = BellForm(request.POST)
+        if form.is_valid():
+            # Обработка формы и сохранение данных в базу данных
+            time_start = form.cleaned_data['time_start']
+            time_end = form.cleaned_data['time_end']
+            # Далее обновите соответствующий объект Bell в базе данных
+
+    data = {
+        'bells': bells,
+        'form': form
+    }
+
+    return render(request, 'edit_bells.html', data)
 
 
 def work_times(request, app_id):
