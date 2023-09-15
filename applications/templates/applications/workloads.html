@@ -45,7 +45,6 @@
             <th>Преподаватели</th>
             <th>Кабинеты</th>
             <th>Количество уроков</th>
-            <th>Расписание</th>
         </tr>
     </thead>
     <tbody>
@@ -56,7 +55,6 @@
                 <td>{{ el.teachers.all|join:", " }}</td>
                 <td>{{ el.cabinets.all|join:", " }}</td>
                 <td>{{ el.lessons_count }}</td>
-                <td>{{ el.schedule_id }}</td>
             </tr>
         {% empty %}
             <tr>
