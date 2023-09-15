@@ -45,27 +45,18 @@ def handle_form(request, app_id, model_class, form_class, template_name):
 
     return render(request, template_name, data)
 
-def handle_form_sched(request, app_id, model_class, form_class, template_name):
+def handle_form_sched(request, app_id, model_class, form_class, template_name, sched_id):
     week_title = find_week_title(request)
-    instances = model_class.objects.filter(schedule_id=app_id)
+    instances = model_class.objects.filter(schedule_id=sched_id)
     error = ''
 
     if request.method == 'POST':
         if 'action' in request.POST and request.POST['action'] == 'ins':
             form = form_class(request.POST)
             if form.is_valid():
-                applications_instance = Applications.objects.get(pk=app_id)
-                form.instance.application_id = applications_instance
+                schedules_instance = Schedules.objects.get(pk=sched_id)
+                form.instance.schedule_id = schedules_instance
                 form.save()
-                if model_class == Schedules:
-                    # Сохранение объект Schedule в базе данных
-                    schedule = form.save()
-
-                    # Получение id созданного объекта
-                    scheb_id = schedule.id
-
-                    # Вызов функции bells_create с передачей scheb_id
-                    bells_create(request, scheb_id)
             else:
                 error = 'Форма была неверной'
     else:
@@ -184,7 +175,8 @@ def work_times(request, app_id):
 
 
 def workloads(request, app_id):
-    return handle_form_sched(request, app_id, WorkLoads, WorkLoadsForm, 'applications/workloads.html')
+    sched_id = request.COOKIES.get('selectedElementId')
+    return handle_form_sched(request, app_id, WorkLoads, WorkLoadsForm, 'applications/workloads.html', sched_id)
 
 
 def printSchedule(request, app_id):

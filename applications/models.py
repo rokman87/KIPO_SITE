@@ -119,7 +119,10 @@ class WorkLoads(models.Model):
     schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='workloads')
 
     def __str__(self):
-        return f'{self.subjects} - {self.groups} - {self.teachers}'
+        subjects_str = ', '.join(str(subject) for subject in self.subjects.all())
+        groups_str = ', '.join(str(group) for group in self.groups.all())
+        teachers_str = ', '.join(str(teacher) for teacher in self.teachers.all())
+        return f'Subjects: {subjects_str} - Groups: {groups_str} - Teachers: {teachers_str}'
 
     class Meta:
         verbose_name = 'Нагрузка'

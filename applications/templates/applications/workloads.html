@@ -37,18 +37,34 @@
         <button class="popup-btn" id="open_pop_up">NEW</button>
     </header>
 
-    <div class="output">
-        <span>{{ error }}</span>
+   <table class="table">
+    <thead>
+        <tr>
+            <th>Предметы</th>
+            <th>Группы</th>
+            <th>Преподаватели</th>
+            <th>Кабинеты</th>
+            <th>Количество уроков</th>
+            <th>Расписание</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for el in groups %}
-        <div class="alert alert-warning">
-            <h3 style='color:{{ el.color }};'>{{ el.subjects }} ({{ el.groups }})</h3>
-            <p style='color:{{ el.color }};'>Преподаватель: {{ el.teachers }}</p>
-            <p style='color:{{ el.color }};'>Кабинеты: {{ el.cabinets }}</p>
-            <p style='color:{{ el.color }};'>количество пар: {{ el.lessons_count }}</p>
-
-        </div>
+            <tr>
+                <td>{{ el.subjects.all|join:", " }}</td>
+                <td>{{ el.groups.all|join:", " }}</td>
+                <td>{{ el.teachers.all|join:", " }}</td>
+                <td>{{ el.cabinets.all|join:", " }}</td>
+                <td>{{ el.lessons_count }}</td>
+                <td>{{ el.schedule_id }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">Нет данных для отображения.</td>
+            </tr>
         {% endfor %}
-    </div>
+    </tbody>
+</table>
 </div>
 
 
