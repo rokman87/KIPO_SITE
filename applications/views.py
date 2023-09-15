@@ -27,7 +27,6 @@ def handle_form(request, app_id, model_class, form_class, template_name):
                     # Получение id созданного объекта
                     scheb_id = schedule.id
 
-
                     # Вызов функции bells_create с передачей scheb_id
                     bells_create(request, scheb_id)
             else:
@@ -44,6 +43,7 @@ def handle_form(request, app_id, model_class, form_class, template_name):
     }
 
     return render(request, template_name, data)
+
 
 def handle_form_sched(request, app_id, model_class, form_class, template_name, sched_id):
     week_title = find_week_title(request)
@@ -179,8 +179,22 @@ def workloads(request, app_id):
     return handle_form_sched(request, app_id, WorkLoads, WorkLoadsForm, 'applications/workloads.html', sched_id)
 
 
+def lessons(request, app_id):
+    week_title = find_week_title(request)
+    data = {
+        'app_id': app_id,
+        'title': week_title
+    }
+    return render(request, 'applications/lessons.html', data)
+
+
 def printSchedule(request, app_id):
-    return render(request, 'applications/printSchedule.html', {'app_id': app_id})
+    week_title = find_week_title(request)
+    data = {
+        'app_id': app_id,
+        'title': week_title
+    }
+    return render(request, 'applications/printSchedule.html', data)
 
 
 def types_lessons(request, app_id):
@@ -204,6 +218,7 @@ def find_week_title(request):
     else:
         week_title = 'Не выбрано!'
     return week_title
+
 
 def clear_cookie(request):
     response.delete_cookie('selectedElementId')

@@ -1,5 +1,5 @@
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WeekDay, WorkLoads
-from django.forms import ModelForm, TextInput, DateInput, SelectMultiple, CheckboxSelectMultiple
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
+from django.forms import ModelForm, TextInput, DateInput, SelectMultiple
 from django import forms
 
 
@@ -32,10 +32,7 @@ class GroupsForm(ModelForm):
 class SubjectsForm(forms.ModelForm):
     cabinets = forms.ModelChoiceField(
         queryset=Cabinets.objects.all(),
-        widget=forms.Select(attrs={
-            'class': 'form-control',
-            'placeholder': 'Аудитории'
-        })
+        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Аудитории'})
     )
 
     class Meta:
@@ -134,15 +131,20 @@ class BellsForm(ModelForm):
 
 
 class WorkLoadsForm(ModelForm):
+    subjects = forms.ModelChoiceField(
+        queryset=Subjects.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Предмет'
+            })
+    )
     class Meta:
         model = WorkLoads
+
         fields = ['subjects', 'groups', 'teachers', 'cabinets', 'lessons_count']
 
         widgets = {
-            "subjects": SelectMultiple(attrs={
-                'class': 'form-control',
-                'placeholder': '`Предметы`',
-            }),
             "groups": SelectMultiple(attrs={
                 'class': 'form-control',
                 'placeholder': 'Группы',
