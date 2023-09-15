@@ -7,8 +7,8 @@ selectScheduleButtons.forEach(function(button) {
     event.preventDefault(); // Предотвращаем действие по умолчанию
     // Получаем значение атрибута "data-element-id" кнопки
     const elementId = button.getAttribute("data-element-id");
-
+    console.log("куки: " + elementId);
     // Устанавливаем куки с использованием значения "el.id" и указываем домен
-    document.cookie = `selectedElementId=${elementId}; domain=127.0.0.1; path=/`;
+    document.cookie = `selectedElementId=${elementId}; domain=localhost; path=/`;
   });
 });

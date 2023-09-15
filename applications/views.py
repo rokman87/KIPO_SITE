@@ -212,3 +212,6 @@ def find_week_title(request):
     else:
         week_title = 'Не выбрано!'
     return week_title
+
+def clear_cookie(request):
+    response.delete_cookie('selectedElementId')
