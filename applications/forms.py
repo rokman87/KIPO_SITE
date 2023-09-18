@@ -130,38 +130,16 @@ class BellsForm(ModelForm):
         }
 
 
-class WorkLoadsForm(ModelForm):
-    subjects = forms.ModelChoiceField(
-        queryset=Subjects.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Предмет'
-            })
-    )
-
+class WorkLoadsForm(forms.ModelForm):
     class Meta:
         model = WorkLoads
-
         fields = ['subjects', 'groups', 'teachers', 'cabinets', 'lessons_count']
-
         widgets = {
-            "groups": SelectMultiple(attrs={
-                'class': 'form-control',
-                'placeholder': 'Группы',
-            }),
-            "teachers": SelectMultiple(attrs={
-                'class': 'form-control',
-                'placeholder': 'Преподаватель',
-            }),
-            "cabinets": SelectMultiple(attrs={
-                'class': 'form-control',
-                'placeholder': 'Кабинеты',
-            }),
-            "lessons_count": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Количество уроков'
-            })
+            'subjects': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Предмет'}),
+            'groups': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Группы'}),
+            'teachers': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Преподаватели'}),
+            'cabinets': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Кабинеты'}),
+            'lessons_count': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Количество уроков'}),
         }
 
 

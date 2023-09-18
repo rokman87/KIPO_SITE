@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
-from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, WorkLoadsForm, BellForm
+from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
 from django.http import HttpResponse
