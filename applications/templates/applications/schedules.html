@@ -38,7 +38,7 @@
     {% if el.schedule_id == selected_element_id %}
     <div class="alert alert-warning">
         <h3 style='color:{{ el.color }};'>{{ el.title }} ({{ el.week_date }})</h3>
-        <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days }}</p>
+        <p style='color:{{ el.color }};'>Дни недели: {{ el.week_days.all|join:", " }}</p>
         <p style='color:{{ el.color }};'>Уроков в день: {{ el.lessons_counts }}</p>
         <p style='color:{{ el.color }};'>Тип недели: {{ el.week_type }}</p>
 
