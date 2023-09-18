@@ -1,0 +1,41 @@
+.tables table {
+    caption-side: bottom;
+    border-collapse: collapse;
+    width: -webkit-fill-available;
+}
+.tables {
+    display: flex;
+}
+.tables tr {
+    display: flex;
+    justify-content: space-around;
+    width: -webkit-fill-available;
+}
+
+.tables td{
+    border: 1px solid black;
+    width: inherit;
+    text-align: center;
+}
+.header {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 22px;
+}
+.weekdays {
+    position: absolute;
+    top: 76px;
+    left: 176px;
+    right: 0;
+    flex-direction: row;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-around;
+}
+.header div {
+    border: thin solid;
+    color: black;
+    width: -webkit-fill-available;
+    text-align: center;
+}
+

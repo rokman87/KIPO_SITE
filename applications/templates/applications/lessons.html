@@ -1,7 +1,83 @@
 {% extends 'applications/layout.html' %}
+{% load static %}
+{% block links %}
+<link rel="stylesheet" href="{% static 'applications/css/lessons.css' %}">
+{% endblock %}
+{% block title %}Сетка уроков{% endblock %}
+{% block styles %}
+<style>
+    .table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: 1px solid #000;
+    margin: 0;
+}
 
-{% block title %}Предметы{% endblock %}
+    .day {
+    width: calc(100% / 7);
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+}
 
+    .lessons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .header {
+    margin: 0;
+}
+    .lesson {
+    border: 1px solid black;
+    width: -webkit-fill-available;
+}
+    .table *{
+    text-align: center;
+    }
+
+    .menu {
+    display: flex;
+}
+    .head-loader {
+    width: 3%;
+    border: 1px solid black;
+}
+
+</style>
+{% endblock %}
 {% block content %}
+
+
+<div class="features">
+    <header>
+        <h1>Сетка уроков</h1>
+    </header>
+    <div class="menu">
+
+        <div class="head-loader"></div>
+        <div class="table">
+            <div class="day header">ПН</div>
+            <div class="day header">ВТ</div>
+            <div class="day header">СР</div>
+            <div class="day header">ЧТ</div>
+            <div class="day header">ПТ</div>
+            <div class="day header">СБ</div>
+            <div class="day header">ВС</div>
+
+            <div class="lessons">
+                <!-- Повторите блок уроков для каждого дня -->
+                {% for i in "1234567" %}
+                {% for a in "12345678" %}
+                <div class="lesson">{{ a }}</div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

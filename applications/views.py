@@ -203,9 +203,11 @@ def workloads(request, app_id):
 
 def lessons(request, app_id):
     week_title = find_week_title(request)
+    schedules = Schedules.objects.all()
     data = {
         'app_id': app_id,
-        'title': week_title
+        'title': week_title,
+        'lessons': schedules
     }
     return render(request, 'applications/lessons.html', data)
 
