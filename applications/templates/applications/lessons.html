@@ -31,45 +31,57 @@
     .header {
     margin: 0;
 }
+
     .lesson {
     width: -webkit-fill-available;
-    border-right: 1px solid black;
+    border-left: 1px solid black;
     border-bottom: 1px solid black;
 }
+
+    .lesson.last-lesson {
+    border-right: 2px solid black;
+}
+
     .table *{
     text-align: center;
-    }
+}
 
     .grid-head {
     display: flex;
 }
+
     .head-loader {
     width: 72px;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
+
     .wdays {
     display: flex;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     width: 100%;
 }
-.grid-lessons-row{
-display: flex;
-flex-direction: row;
+
+    .grid-lessons-row {
+    display: flex;
+    flex-direction: row;
     flex-wrap: nowrap;
     height: 70px;
     align-items: stretch;
 }
+
     .grid-lessons-row .cell {
     flex: 1;
     align-items: center;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
-.lessons-grid {
+
+    .lessons-grid {
     text-align: center;
 }
+
     .grid-lessons .grid-lessons-row {
     display: flex;
     flex-direction: row;
@@ -82,17 +94,36 @@ flex-direction: row;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
-.workloads-interface {
+
+    .workloads-interface {
     min-height: 140px;
-    width: 100%;
-    position: relative!important;
+    width: 89%;
     bottom: 0!important;
     top: auto!important;
-    flex: 0 0 auto;
-    z-index: 0;
     background: var(--second-background);
     border-top: 2px solid black;
+    display: flex;
+    position: absolute;
 }
+
+    .element {
+    background-color: cadetblue;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 15px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+    .border-right {
+    border-right: 2px solid black;
+}
+
+    .day {
+    border-right: 2px solid black;
+}
+
 
 </style>
 {% endblock %}
@@ -136,7 +167,7 @@ flex-direction: row;
                     <!-- Повторите блок уроков для каждого дня -->
                     {% for i in lessons_days_number %}
                     {% for a in lesson_numbers %}
-                    <div class="lesson">{{ a }}</div>
+                    <div class="lesson {% if forloop.last %}last-lesson{% endif %}">{{ a }}</div>
                     {% endfor %}
                     {% endfor %}
                 </div>
@@ -150,8 +181,9 @@ flex-direction: row;
             <div class="caption">{{ group.title }}</div>
             {% for i in lessons_days_number %}
             {% for a in lesson_numbers %}
-            <div class="cell w-{{ i }}"> </div>
+            <div class="cell w-{{ i }}"></div>
             {% endfor %}
+            <div class="border-right"><!--Полоса разделяющая дни недели--></div>
             {% endfor %}
         </div>
         {% endfor %}
@@ -159,7 +191,7 @@ flex-direction: row;
     <div class="workloads-interface">
         {% for el in instances %}
         <div class="element">
-            {{ el.subjects.all|join:", " }}/{{ el.lessons_count }}
+            {{ el.subjects }} | {{ el.lessons_count }}
         </div>
         {% endfor %}
     </div>

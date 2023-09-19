@@ -49,6 +49,7 @@ def handle_form_sched(request, app_id, model_class, form_class, template_name, s
     week_title = find_week_title(request)
     instances = model_class.objects.filter(schedule_id=sched_id)
     error = ''
+    field_errors = {}
 
     if request.method == 'POST':
         if 'action' in request.POST and request.POST['action'] == 'ins':
@@ -63,7 +64,7 @@ def handle_form_sched(request, app_id, model_class, form_class, template_name, s
                 # Остальной код для обработки ошибок
                 error = 'Форма содержит ошибки. Пожалуйста, проверьте поля формы.'
                 # Дополнительно можно добавить вывод ошибок для каждого поля
-                field_errors = {}
+
                 for field, error_list in errors.items():
                     field_errors[field] = [str(error) for error in error_list]
     else:
@@ -74,7 +75,8 @@ def handle_form_sched(request, app_id, model_class, form_class, template_name, s
         'error': error,
         'app_id': app_id,
         'groups': instances,
-        'title': week_title
+        'title': week_title,
+        'field_errors': field_errors  # Добавьте это в контекст
     }
 
     return render(request, template_name, data)

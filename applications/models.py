@@ -111,7 +111,7 @@ class Bells(models.Model):
 
 
 class WorkLoads(models.Model):
-    subjects = models.ManyToManyField(Subjects)
+    subjects = models.ForeignKey(Subjects, on_delete=models.CASCADE)
     groups = models.ManyToManyField(Groups)
     teachers = models.ManyToManyField(Teachers)
     cabinets = models.ManyToManyField(Cabinets)
@@ -119,10 +119,7 @@ class WorkLoads(models.Model):
     schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='workloads')
 
     def __str__(self):
-        subjects_str = ', '.join(str(subject) for subject in self.subjects.all())
-        groups_str = ', '.join(str(group) for group in self.groups.all())
-        teachers_str = ', '.join(str(teacher) for teacher in self.teachers.all())
-        return f'Subjects: {subjects_str} - Groups: {groups_str} - Teachers: {teachers_str}'
+        return f'Subject: {self.subjects} - Groups: {", ".join(str(group) for group in self.groups.all())} - Teachers: {", ".join(str(teacher) for teacher in self.teachers.all())}'
 
     class Meta:
         verbose_name = 'Нагрузка'

@@ -35,19 +35,7 @@
     <header>
         <h1>Нагрузки</h1>
         <button class="popup-btn" id="open_pop_up">NEW</button>
-        {% if field_errors %}
     <ul>
-    {% for field, errors in field_errors.items %}
-        <li>{{ field }}:
-            <ul>
-            {% for error in errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </ul>
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
     </header>
 
    <table class="table">
@@ -63,7 +51,7 @@
     <tbody>
         {% for el in groups %}
             <tr>
-                <td>{{ el.subjects.all|join:", " }}</td>
+                <td>{{ el.subjects }}</td>
                 <td>{{ el.groups.all|join:", " }}</td>
                 <td>{{ el.teachers.all|join:", " }}</td>
                 <td>{{ el.cabinets.all|join:", " }}</td>
@@ -76,6 +64,14 @@
         {% endfor %}
     </tbody>
 </table>
+    {% if form.is_bound %}
+    <p>Значения полей формы:</p>
+    <ul>
+        {% for field in form %}
+            <li>{{ field.label_tag }}: {{ field.value }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 </div>
 
