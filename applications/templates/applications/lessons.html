@@ -10,46 +10,88 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border: 1px solid #000;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     margin: 0;
 }
 
     .day {
     width: -webkit-fill-available;
-    border: 1px solid #000;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     padding: 10px;
 }
 
-    .lessons {
-    width: 100%;
+    .lessons-numbers {
     display: flex;
     justify-content: space-between;
+    flex: 1;
 }
 
     .header {
     margin: 0;
 }
     .lesson {
-    border: 1px solid black;
     width: -webkit-fill-available;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
     .table *{
     text-align: center;
     }
 
-    .menu {
+    .grid-head {
     display: flex;
 }
     .head-loader {
-    width: 3%;
-    border: 1px solid black;
+    width: 72px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
     .wdays {
     display: flex;
-    justify-content: space-between;
-    border: 1px solid #000;
-    margin: 0;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     width: 100%;
+}
+.grid-lessons-row{
+display: flex;
+flex-direction: row;
+    flex-wrap: nowrap;
+    height: 70px;
+    align-items: stretch;
+}
+    .grid-lessons-row .cell {
+    flex: 1;
+    align-items: center;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.lessons-grid {
+    text-align: center;
+}
+    .grid-lessons .grid-lessons-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 70px;
+    align-items: stretch;
+}
+    .caption {
+    width: 70px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.workloads-interface {
+    min-height: 140px;
+    width: 100%;
+    position: relative!important;
+    bottom: 0!important;
+    top: auto!important;
+    flex: 0 0 auto;
+    z-index: 0;
+    background: var(--second-background);
+    border-top: 2px solid black;
 }
 
 </style>
@@ -61,45 +103,67 @@
     <header>
         <h1>Сетка уроков</h1>
     </header>
-    <div class="menu">
-
-        <div class="head-loader"></div>
-        <div class="table">
-            <div class="wdays">
-                {% for day in sched.week_days.all %}
-                {% if day.name == "ПН" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "ВТ" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "СР" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "ЧТ" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "ПТ" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "СБ" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% if day.name == "ВС" %}
-                <div class="day">{{ day.name }}</div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            <div class="lessons">
-                <!-- Повторите блок уроков для каждого дня -->
-                {% for i in lessons_days_number %}
-                {% for a in lesson_numbers %}
-                <div class="lesson">{{ a }}</div>
-                {% endfor %}
-                {% endfor %}
+    <div class="lesson-grid-header">
+        <div class="grid-head">
+            <div class="head-loader"></div>
+            <div class="table">
+                <div class="wdays">
+                    {% for day in sched.week_days.all %}
+                    {% if day.name == "ПН" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "ВТ" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "СР" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "ЧТ" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "ПТ" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "СБ" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% if day.name == "ВС" %}
+                    <div class="day">{{ day.name }}</div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="lessons-numbers">
+                    <!-- Повторите блок уроков для каждого дня -->
+                    {% for i in lessons_days_number %}
+                    {% for a in lesson_numbers %}
+                    <div class="lesson">{{ a }}</div>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="lessons-grid">
+        {% for group in groups %}
+        <div class="grid-lessons-row">
+            <div class="caption">{{ group.title }}</div>
+            {% for i in lessons_days_number %}
+            {% for a in lesson_numbers %}
+            <div class="cell w-{{ i }}"> </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="workloads-interface">
+        {% for el in instances %}
+        <div class="element">
+            {{ el.subjects.all|join:", " }}/{{ el.lessons_count }}
+        </div>
+        {% endfor %}
+    </div>
+
 
 </div>
 

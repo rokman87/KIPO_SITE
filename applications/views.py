@@ -215,12 +215,19 @@ def lessons(request, app_id):
     except Schedules.DoesNotExist:
         lesson_numbers = 0
 
+    groups = Groups.objects.all()
+    groups_filter = groups.filter(application_id=app_id)
+
+    instances = WorkLoads.objects.filter(schedule_id=sched_id)
+
     data = {
         'app_id': app_id,
         'title': week_title,
         'sched': sched,
         'lesson_numbers': lesson_numbers,
         'lessons_days_number': lessons_days_number,
+        'groups': groups_filter,
+        'instances': instances,
     }
 
     return render(request, 'applications/lessons.html', data)
