@@ -32,11 +32,12 @@ body {
 /*Боковое окно*/
 .sidebar {
     float: left;
-    width: 10%;
+    width: 12%;
     background-color: var(--second-background);
     padding: 2px 5px 0px 15px;
     height: 100vh;
     border-right: 2px solid var(--border);
+        position: initial;
 }
 .nav {
     border-top: 1px solid var(--border);
