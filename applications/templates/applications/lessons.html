@@ -15,10 +15,9 @@
 }
 
     .day {
-    width: calc(100% / 7);
+    width: -webkit-fill-available;
     border: 1px solid #000;
     padding: 10px;
-    text-align: center;
 }
 
     .lessons {
@@ -45,6 +44,13 @@
     width: 3%;
     border: 1px solid black;
 }
+    .wdays {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #000;
+    margin: 0;
+    width: 100%;
+}
 
 </style>
 {% endblock %}
@@ -59,18 +65,35 @@
 
         <div class="head-loader"></div>
         <div class="table">
-            <div class="day header">ПН</div>
-            <div class="day header">ВТ</div>
-            <div class="day header">СР</div>
-            <div class="day header">ЧТ</div>
-            <div class="day header">ПТ</div>
-            <div class="day header">СБ</div>
-            <div class="day header">ВС</div>
-
+            <div class="wdays">
+                {% for day in sched.week_days.all %}
+                {% if day.name == "ПН" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "ВТ" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "СР" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "ЧТ" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "ПТ" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "СБ" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% if day.name == "ВС" %}
+                <div class="day">{{ day.name }}</div>
+                {% endif %}
+                {% endfor %}
+            </div>
             <div class="lessons">
                 <!-- Повторите блок уроков для каждого дня -->
-                {% for i in "1234567" %}
-                {% for a in "12345678" %}
+                {% for i in lessons_days_number %}
+                {% for a in lesson_numbers %}
                 <div class="lesson">{{ a }}</div>
                 {% endfor %}
                 {% endfor %}

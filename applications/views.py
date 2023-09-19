@@ -203,12 +203,26 @@ def workloads(request, app_id):
 
 def lessons(request, app_id):
     week_title = find_week_title(request)
-    schedules = Schedules.objects.all()
+    sched_id = request.COOKIES.get('selectedElementId')
+    try:
+        sched = Schedules.objects.get(id=sched_id)
+        lessons_counts = int(sched.lessons_counts)
+        lesson_numbers = list(range(1, lessons_counts + 1))
+        lessons_days = sched.week_days.all()
+        lessons_days_counts = len(lessons_days)
+        lessons_days_number = list(range(1, lessons_days_counts + 1))
+
+    except Schedules.DoesNotExist:
+        lesson_numbers = 0
+
     data = {
         'app_id': app_id,
         'title': week_title,
-        'lessons': schedules
+        'sched': sched,
+        'lesson_numbers': lesson_numbers,
+        'lessons_days_number': lessons_days_number,
     }
+
     return render(request, 'applications/lessons.html', data)
 
 
