@@ -58,7 +58,14 @@ def handle_form_sched(request, app_id, model_class, form_class, template_name, s
                 form.instance.schedule_id = schedules_instance
                 form.save()
             else:
-                error = 'Форма была неверной'
+                # Ошибки в форме, можно их получить и передать в контекст
+                errors = form.errors.as_data()
+                # Остальной код для обработки ошибок
+                error = 'Форма содержит ошибки. Пожалуйста, проверьте поля формы.'
+                # Дополнительно можно добавить вывод ошибок для каждого поля
+                field_errors = {}
+                for field, error_list in errors.items():
+                    field_errors[field] = [str(error) for error in error_list]
     else:
         form = form_class()
 

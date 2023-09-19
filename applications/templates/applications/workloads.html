@@ -35,6 +35,19 @@
     <header>
         <h1>Нагрузки</h1>
         <button class="popup-btn" id="open_pop_up">NEW</button>
+        {% if field_errors %}
+    <ul>
+    {% for field, errors in field_errors.items %}
+        <li>{{ field }}:
+            <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
     </header>
 
    <table class="table">
@@ -63,6 +76,7 @@
         {% endfor %}
     </tbody>
 </table>
+
 </div>
 
 
