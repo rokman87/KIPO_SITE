@@ -229,6 +229,8 @@ def lessons(request, app_id):
 
     instances = WorkLoads.objects.filter(schedule_id=sched_id)
 
+
+
     data = {
         'app_id': app_id,
         'title': week_title,

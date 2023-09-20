@@ -72,10 +72,16 @@
 }
 
     .grid-lessons-row .cell {
-    flex: 1;
-    align-items: center;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+    word-break: break-word;
+    font-size: 10px;
 }
 
     .lessons-grid {
@@ -107,13 +113,16 @@
 }
 
     .element {
-    background-color: cadetblue;
     width: fit-content;
     height: fit-content;
     padding: 5px;
     border-radius: 15px;
     margin-top: 5px;
     margin-left: 5px;
+    display: flex;
+}
+
+    .draggable{
 }
 
     .border-right {
@@ -181,7 +190,7 @@
             <div class="caption">{{ group.title }}</div>
             {% for i in lessons_days_number %}
             {% for a in lesson_numbers %}
-            <div class="cell w-{{ i }}"></div>
+            <div class="cell w-{{ i }}" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
             {% endfor %}
             <div class="border-right"><!--Полоса разделяющая дни недели--></div>
             {% endfor %}
@@ -191,7 +200,7 @@
     <div class="workloads-interface">
         {% for el in instances %}
         <div class="element">
-            {{ el.subjects }} | {{ el.lessons_count }}
+            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:white">{{ el.subjects }} </div> | {{ el.lessons_count }}
         </div>
         {% endfor %}
     </div>
