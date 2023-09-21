@@ -113,6 +113,7 @@
 }
 
     .element {
+    background-color: cadetblue;
     width: fit-content;
     height: fit-content;
     padding: 5px;
@@ -123,6 +124,7 @@
 }
 
     .draggable{
+    background-color: cadetblue;
 }
 
     .border-right {
@@ -200,7 +202,7 @@
     <div class="workloads-interface">
         {% for el in instances %}
         <div class="element">
-            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:white">{{ el.subjects }} </div> | {{ el.lessons_count }}
+            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:{{ el.color }}">{{ el.subjects }} </div> | {{ el.lessons_count }}
         </div>
         {% endfor %}
     </div>
