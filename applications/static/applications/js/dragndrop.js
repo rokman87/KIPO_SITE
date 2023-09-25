@@ -21,5 +21,4 @@
 
       container.innerHTML = data; // Заполняем контейнер текстом из перетаскиваемого элемента
       container.style.backgroundColor = color; // Устанавливаем цвет фона контейнера таким же, как у перетаскиваемого элемента
-      sendDataToServer(data, color, container);
     }
