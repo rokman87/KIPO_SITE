@@ -2,7 +2,7 @@ function drag(event) {
     console.log("[drag event]");
     var draggableElement = event.target;
 
-    // Ищем блок с классом 'draggable' внутри перетаскиваемого элемента и получаем его текстовое содержимое
+    // Ищем блок с классом 'element' внутри перетаскиваемого элемента и получаем его текстовое содержимое
     var draggableContainer = draggableElement.closest(".element");
     var draggableContentElement = draggableContainer.querySelector('.draggable');
 
@@ -16,11 +16,23 @@ function drag(event) {
         // Для сохранения цвета фона перетаскиваемого элемента используйте следующий код:
         var bgColor = window.getComputedStyle(draggableContentElement).getPropertyValue("background-color");
         event.dataTransfer.setData("color", bgColor);
+
+
+        pChange(draggableContainer)
     } else {
         console.error("Ошибка: не найден элемент с классом 'draggable' внутри перетаскиваемого элемента.");
     }
+
 }
 
+function pChange(draggableContainer) {
+        // Получаем элемент <p> и его текстовое содержимое
+        var pElement = draggableContainer.querySelector('p');
+        var pContent = parseInt(pElement.textContent, 10);
+        // Вычитаем единицу и обновляем текстовое содержимое элемента <p>
+        pContent -= 1;
+        pElement.textContent = pContent;
+        }
 
 function allowDrop(event) {
     event.preventDefault();
@@ -53,5 +65,8 @@ function drop(event) {
   // Изменяем текст целевого элемента и его фоновый цвет на значения, полученные из перетаскиваемого элемента
   target.textContent = data;
   target.style.backgroundColor = color;
+
+
+
 
 }
