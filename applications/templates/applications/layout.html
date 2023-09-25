@@ -45,12 +45,17 @@
         <li><a href="{% url 'home' %}"><i class="fa-solid fa-layer-group"></i> Мои приложения</a></li>
     </ul>
 </aside>
+
 {% block content %}
 {% endblock %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'applications/js/window.js' %}"></script>
 <script src="{% static 'applications/js/select.js' %}"></script>
+
+<script src="{% static 'applications/js/savedata.js' %}"></script>
 <script src="{% static 'applications/js/dragndrop.js' %}"></script>
+{% block scripts %}
+{% endblock %}
 
 </body>
 </html>

@@ -124,3 +124,9 @@ class WorkLoads(models.Model):
     class Meta:
         verbose_name = 'Нагрузка'
         verbose_name_plural = 'Нагрузки'
+
+
+class BlockMove(models.Model):
+    block_text = models.CharField(max_length=255)
+    container = models.CharField(max_length=255)
+    moved_at = models.CharField(max_length=255)

@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads, BlockMove
 from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
@@ -278,3 +276,23 @@ def find_week_title(request):
 
 def clear_cookie(request):
     response.delete_cookie('selectedElementId')
+
+
+
+
+def record_block_move(request):
+    if request.method == 'POST':
+        # Извлеките данные из запроса
+        block_text = request.POST.get('block_text')
+        target_container = request.POST.get('target_container')
+        color = request.POST.get('color')
+
+        # Выполните обработку данных здесь
+        # Например, сохраните их в базу данных или выполните другие действия
+
+        # Верните JSON-ответ клиенту
+        response_data = {'message': 'Данные успешно обработаны на сервере.'}
+        return JsonResponse(response_data)
+    else:
+        # Обработка неправильных запросов (GET и других методов)
+        return JsonResponse({'error': 'Метод не разрешен.'}, status=405)

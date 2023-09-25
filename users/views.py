@@ -54,12 +54,9 @@ def registration(request):
         return render(request, 'users/registration.html', context)
 
 
-@login_required
 def pagelogin(request):
     uservalue = ''
     passwordvalue = ''
-
-    valuenext = request.POST.get('next')
 
     form = LoginForm(request.POST or None)
     if form.is_valid():
@@ -67,25 +64,12 @@ def pagelogin(request):
         passwordvalue = form.cleaned_data.get("password")
 
         user = authenticate(username=uservalue, password=passwordvalue)
-        if user is not None and valuenext == '':
+        if user is not None:
             login(request, user)
-
-            context = {'form': form,
-                       'valuenext': valuenext}
 
             messages.success(request, "Вы успешно вошли в систему!")
 
             return redirect('home')
-
-        if user is not None and valuenext != '':
-            login(request, user)
-
-            messages.success(request, "Вы успешно вошли в систему")
-
-            context = {'form': form,
-                       'valuenext': valuenext}
-
-            return redirect(valuenext)
         else:
             context = {'form': form,
                        'error': 'Неверная комбинация имени пользователя и пароля'}
