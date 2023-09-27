@@ -2,71 +2,69 @@ function drag(event) {
     console.log("[drag event]");
     var draggableElement = event.target;
 
-    // Ищем блок с классом 'element' внутри перетаскиваемого элемента и получаем его текстовое содержимое
     var draggableContainer = draggableElement.closest(".element");
     var draggableContentElement = draggableContainer.querySelector('.draggable');
+    var data = draggableContentElement.getAttribute("data");
 
-    if (draggableContentElement) {
-        var draggableContent = draggableContentElement.textContent;
-        console.log("draggableContent = " + draggableContent);
+    draggableContainer.id = "draggable-container";
+    event.dataTransfer.setData("container-id", draggableContainer.id);
+    event.dataTransfer.setData("element-id", data);
 
-        // Если вы хотите продолжить перетаскивание и использовать этот текст:
-        event.dataTransfer.setData("text/plain", draggableContent);
+    var draggableContent = draggableContentElement.textContent;
+    console.log("draggableContent = " + draggableContent);
 
-        // Для сохранения цвета фона перетаскиваемого элемента используйте следующий код:
-        var bgColor = window.getComputedStyle(draggableContentElement).getPropertyValue("background-color");
-        event.dataTransfer.setData("color", bgColor);
+    event.dataTransfer.setData("text/plain", draggableContent);
 
+    var bgColor = window.getComputedStyle(draggableContentElement).getPropertyValue("background-color");
+    event.dataTransfer.setData("color", bgColor);
 
-        pChange(draggableContainer)
-    } else {
-        console.error("Ошибка: не найден элемент с классом 'draggable' внутри перетаскиваемого элемента.");
-    }
-
+    pChange(draggableContainer);
 }
 
 function pChange(draggableContainer) {
-        // Получаем элемент <p> и его текстовое содержимое
-        var pElement = draggableContainer.querySelector('p');
-        var pContent = parseInt(pElement.textContent, 10);
-        // Вычитаем единицу и обновляем текстовое содержимое элемента <p>
-        pContent -= 1;
-        pElement.textContent = pContent;
-        }
+    // Получаем элемент <p> и его текстовое содержимое
+    var pElement = draggableContainer.querySelector('p');
+    var pContent = parseInt(pElement.textContent, 10);
+    // Вычитаем единицу и обновляем текстовое содержимое элемента <p>
+    pContent -= 1;
+    pElement.textContent = pContent;
+}
 
 function allowDrop(event) {
     event.preventDefault();
 }
 
 function drop(event) {
-  console.log("[drop event]");
-  event.preventDefault();
+    console.log("[drop event]");
+    event.preventDefault();
 
-  // Получаем данные из объекта перетаскивания
-  var data = event.dataTransfer.getData("text");
-  var color = event.dataTransfer.getData("color");
-  var target = event.target;
+    var data = event.dataTransfer.getData("text/plain");
+    var color = event.dataTransfer.getData("color");
+    var elementId = event.dataTransfer.getData("element-id");
+    var containerId = event.dataTransfer.getData("container-id");
 
-  // Находим целевой элемент, который содержит перетаскиваемый элемент
-  while (target.className.indexOf("cell") === -1) {
-    target = target.parentNode;
-  }
-  var targetClass = target.getAttribute("class");
-  console.log("targetClass = " + targetClass);
+    var target = event.target;
 
-  // Получаем класс целевого контейнера-урока
-  var container = event.currentTarget;
-  var containerClass = container.getAttribute("class");
+    // Ищем элемент с классом cell
+    while (target.className.indexOf("cell") === -1) {
+        target = target.parentNode;
+    }
 
-  // Получаем значение блока с классом 'caption', находящимся в одном родительском элементе с целевым элементом
-  var captionValue = target.parentNode.querySelector('.caption').textContent;
-  console.log("captionValue = " + captionValue);
+    var targetClass = target.getAttribute("class");
+    console.log("targetClass = " + targetClass);
 
-  // Изменяем текст целевого элемента и его фоновый цвет на значения, полученные из перетаскиваемого элемента
-  target.textContent = data;
-  target.style.backgroundColor = color;
+    var container = event.currentTarget;
+    var containerClass = container.getAttribute("class");
 
+    var captionValue = target.parentNode.querySelector('.caption').textContent;
+    console.log("captionValue = " + captionValue);
 
+    target.textContent = data; // Устанавливаем текстовый контент
+    target.style.backgroundColor = color; // Устанавливаем фоновый цвет
+    target.dataset.id = elementId; // Устанавливаем значение атрибута data-id
+    console.log("elementId = " + elementId);
 
+    // Установим значение data в div с классом "cell"
+    target.dataset.elementData = data;
 
 }
