@@ -1,3 +1,5 @@
+var previousDraggableContainer = null; // Создаем глобальную переменную для хранения предыдущего контейнера
+
 function drag(event) {
     console.log("[drag event]");
     var draggableElement = event.target;
@@ -6,9 +8,17 @@ function drag(event) {
     var draggableContentElement = draggableContainer.querySelector('.draggable');
     var data = draggableContentElement.getAttribute("data");
 
+    if (previousDraggableContainer) {
+        // Если предыдущий контейнер существует, удаляем id
+        previousDraggableContainer.removeAttribute("id");
+    }
+
     draggableContainer.id = "draggable-container";
     event.dataTransfer.setData("container-id", draggableContainer.id);
     event.dataTransfer.setData("element-id", data);
+
+    // Сохраняем ссылку на текущий контейнер в качестве предыдущего
+    previousDraggableContainer = draggableContainer;
 
     var draggableContent = draggableContentElement.textContent;
     console.log("draggableContent = " + draggableContent);
@@ -17,9 +27,8 @@ function drag(event) {
 
     var bgColor = window.getComputedStyle(draggableContentElement).getPropertyValue("background-color");
     event.dataTransfer.setData("color", bgColor);
-
-    pChange(draggableContainer);
 }
+
 
 function pChange(draggableContainer) {
     // Получаем элемент <p> и его текстовое содержимое
@@ -28,6 +37,11 @@ function pChange(draggableContainer) {
     // Вычитаем единицу и обновляем текстовое содержимое элемента <p>
     pContent -= 1;
     pElement.textContent = pContent;
+
+    // Если pContent равен нулю, удаляем весь блок .element
+    if (pContent === 0) {
+        draggableContainer.remove();
+    }
 }
 
 function allowDrop(event) {
@@ -67,4 +81,8 @@ function drop(event) {
     // Установим значение data в div с классом "cell"
     target.dataset.elementData = data;
 
+    // Вызываем функцию pChange для удаления элемента после его перемещения
+    var draggableContainer = document.getElementById(containerId);
+    pChange(draggableContainer);
 }
+
