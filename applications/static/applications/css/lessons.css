@@ -39,3 +39,151 @@
     text-align: center;
 }
 
+.table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin: 0;
+}
+
+    .day {
+    width: -webkit-fill-available;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+    .lessons-numbers {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+    .header {
+    margin: 0;
+}
+
+    .lesson {
+    width: -webkit-fill-available;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+    .lesson.last-lesson {
+    border-right: 2px solid black;
+}
+
+    .table *{
+    text-align: center;
+}
+
+    .grid-head {
+    display: flex;
+}
+
+    .head-loader {
+    width: 72px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+    .wdays {
+    display: flex;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+    .grid-lessons-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 70px;
+    align-items: stretch;
+}
+
+    .grid-lessons-row .cell {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+    word-break: break-word;
+    font-size: 10px;
+}
+
+    .lessons-grid {
+    text-align: center;
+}
+
+    .grid-lessons .grid-lessons-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 70px;
+    align-items: stretch;
+}
+    .caption {
+    width: 70px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.workloads-interface {
+    min-height: 140px;
+    width: 89%;
+    bottom: 0!important;
+    top: auto!important;
+    background: var(--second-background);
+    border-top: 2px solid black;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
+.instances {
+    display: flex;
+    width: 60%;
+    overflow: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+    .element {
+    background-color: cadetblue;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 15px;
+    margin-top: 5px;
+    margin-left: 5px;
+    display: flex;
+}
+
+    .draggable{
+    background-color: cadetblue;
+}
+
+    .border-right {
+    border-right: 2px solid black;
+}
+
+    .day {
+    border-right: 2px solid black;
+}
+
+.info-window {
+    background: #656573;
+    width: 40%;
+    border-left: 2px solid black;
+}
+
+
+
