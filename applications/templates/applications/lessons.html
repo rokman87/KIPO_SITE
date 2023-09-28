@@ -202,13 +202,21 @@
     <div class="workloads-interface">
         {% for el in instances %}
         <div class="element">
-            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:{{ el.color }}" data="{{ el.id }}">{{ el.subjects }} </div> | <p>{{ el.lessons_count }}</p>
+            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:{{ el.color }}"
+                 data="{{ el.id }}">{{ el.subjects }}
+            </div>
+            | <p>{{ el.lessons_count }}</p>
         </div>
         {% endfor %}
+
+        <div id="workload-info" class="workload-info" style="display:none;">
+            <!-- Здесь будет отображаться детальная информация о workload -->
+        </div>
     </div>
 
 
 </div>
+
 
 {% endblock %}
 {% block scripts %}

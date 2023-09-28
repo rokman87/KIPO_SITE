@@ -40,6 +40,7 @@ function pChange(draggableContainer) {
 
     // Если pContent равен нулю, удаляем весь блок .element
     if (pContent === 0) {
+    console.log("Удаляем нагрузку");
         draggableContainer.remove();
     }
 }

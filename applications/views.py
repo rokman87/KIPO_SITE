@@ -4,6 +4,8 @@ from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, Schedul
 from users.models import Applications
 from datetime import datetime, timedelta
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.core import serializers
+
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
@@ -276,3 +278,10 @@ def find_week_title(request):
 
 def clear_cookie(request):
     response.delete_cookie('selectedElementId')
+
+
+
+def get_workload(request, workload_id):
+    workload = WorkLoads.objects.get(pk=workload_id)
+    serialized_workload = serializers.serialize('json', [workload])
+    return JsonResponse(serialized_workload, safe=False)
