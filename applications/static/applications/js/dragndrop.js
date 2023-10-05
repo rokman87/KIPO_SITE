@@ -78,12 +78,13 @@ function drop(event) {
     target.style.backgroundColor = color; // Устанавливаем фоновый цвет
     target.dataset.id = elementId; // Устанавливаем значение атрибута data-id
     console.log("elementId = " + elementId);
-
+    console.log("<------------------------------------->");
     // Установим значение data в div с классом "cell"
     target.dataset.elementData = data;
 
     // Вызываем функцию pChange для удаления элемента после его перемещения
     var draggableContainer = document.getElementById(containerId);
     pChange(draggableContainer);
+
 }
 
