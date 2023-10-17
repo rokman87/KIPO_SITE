@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import SaveCellData
 
 urlpatterns = [
     path('<int:app_id>/schedules/', views.schedules, name='schedules'),
@@ -16,5 +17,6 @@ urlpatterns = [
     path('<int:app_id>/publication/', views.publication, name='publication'),
     path('<int:app_id>/settings/', views.settings, name='settings'),
     path('ajax/get_workload/<int:workload_id>/', views.get_workload, name='get_workload'),
+    path('url-django/', SaveCellData.as_view(), name='save-cell-data'),
 
 ]

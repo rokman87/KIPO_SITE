@@ -285,3 +285,19 @@ def get_workload(request, workload_id):
     workload = WorkLoads.objects.get(pk=workload_id)
     serialized_workload = serializers.serialize('json', [workload])
     return JsonResponse(serialized_workload, safe=False)
+
+
+import json
+from django.http import JsonResponse
+from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.utils.decorators import method_decorator
+
+@method_decorator(csrf_protect, name='dispatch')
+class SaveCellData(View):
+    def post(self, request, *args, **kwargs):
+        cell_data = json.loads(request.body)
+
+        # Здесь вы должны предоставить логику сохранения данных в вашу базу данных
+
+        return JsonResponse({'status': 'success'})

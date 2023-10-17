@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
 
-        // выводим в консоль для проверки
-        console.log(cellsData);
-
-        // сохраняем в localStorage
-        localStorage.setItem("cellsData", JSON.stringify(cellsData));
+        // Отправляем данные на бэкенд Django
+        fetch('url-django', {
+            method: 'POST',
+            body: JSON.stringify(cellsData),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Ошибка:', error))
+        .then(response => console.log('Успех:', response));
     });
 });

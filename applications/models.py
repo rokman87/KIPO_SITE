@@ -125,3 +125,11 @@ class WorkLoads(models.Model):
         verbose_name = 'Нагрузка'
         verbose_name_plural = 'Нагрузки'
 
+
+class LessonsCells(models.Model):
+    text = models.CharField('Текст', max_length=50)
+    dataElementId = models.ManyToManyField(WorkLoads)
+    cellName = models.CharField('Место', max_length=50)
+    def __str__(self):
+        return self.text
+
