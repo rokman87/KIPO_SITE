@@ -9,7 +9,7 @@ selectScheduleButtons.forEach(function(button) {
     console.log("Set Cookie: ", elementId);
 
     // Устанавливаем куки с использованием значения "el.id"
-    document.cookie = `selectedElementId=${elementId}; path=/; max-age=3600;`
+    document.cookie = `selectedElementId=${elementId}; path=/; max-age=3999600;`
 
     // Выводим все куки в консоль
     console.log("All cookies:", document.cookie);

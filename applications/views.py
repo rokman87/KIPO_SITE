@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads, LessonsCells
 from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
 from users.models import Applications
 from datetime import datetime, timedelta
@@ -298,6 +298,34 @@ class SaveCellData(View):
     def post(self, request, *args, **kwargs):
         cell_data = json.loads(request.body)
 
-        # Здесь вы должны предоставить логику сохранения данных в вашу базу данных
+        for cell in cell_data:
+            # Извлекаем 'dataElementId', которое должно быть представлено списком id объектов 'Workloads'
+            loads_ids = cell.get('dataElementId')
+            if not loads_ids:
+                return JsonResponse({'status': 'Error', 'message': 'Missing dataId in cell data.'})
+            if not isinstance(loads_ids, list):
+                loads_ids = [loads_ids]
 
-        return JsonResponse({'status': 'success'})
+            # Проверяем, что 'loads_ids' действительно является списком
+            if not isinstance(loads_ids, list):
+                return JsonResponse({'status 1': 'Error', 'message 1': f"Error in data: {cell}."})
+
+            # Извлекаем объекты 'WorkLoads' из базы данных по их id
+            loads = WorkLoads.objects.filter(id__in=loads_ids)
+
+            # Если количество найденных объектов 'WorkLoads' не равно количеству id в 'loads_ids', что-то пошло не так
+            if len(loads) != len(loads_ids):
+                return JsonResponse({'status 2': 'Error', 'message 2': f'Could not find all WorkLoads for data: {cell}.'})
+
+            # Создаем новый объект 'LessonsCells'
+            new_cell = LessonsCells.objects.create(
+                text=cell.get('text'),
+                cellName=cell.get('cellName')
+            )
+
+            # Добавляем 'WorkLoads' к новому объекту 'LessonsCells'
+            new_cell.dataElementId.add(*loads)
+
+        # Возвращаем успех, если всё прошло по плану
+        return JsonResponse({'status 3': 'Super success'})
+
