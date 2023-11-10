@@ -5,7 +5,10 @@ from users.models import Applications
 from datetime import datetime, timedelta
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core import serializers
-
+from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.utils.decorators import method_decorator
+import json
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
@@ -221,6 +224,7 @@ def lessons(request, app_id):
         lessons_days_counts = len(lessons_days)
         lessons_days_number = list(range(1, lessons_days_counts + 1))
 
+        lessons_cells_data = LessonsCells.objects.all()
     except Schedules.DoesNotExist:
         lesson_numbers = 0
 
@@ -239,6 +243,7 @@ def lessons(request, app_id):
         'lessons_days_number': lessons_days_number,
         'groups': groups_filter,
         'instances': instances,
+        'lessons_cells_data': lessons_cells_data,
     }
 
     return render(request, 'applications/lessons.html', data)
@@ -287,11 +292,7 @@ def get_workload(request, workload_id):
     return JsonResponse(serialized_workload, safe=False)
 
 
-import json
-from django.http import JsonResponse
-from django.views import View
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
-from django.utils.decorators import method_decorator
+
 
 @method_decorator(csrf_protect, name='dispatch')
 class SaveCellData(View):

@@ -61,7 +61,13 @@
             <div class="caption">{{ group.title }}</div>
             {% for i in lessons_days_number %}
             {% for a in lesson_numbers %}
-            <div class="cell w-{{ i }} d-{{ a }}" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            <div class="cell w-{{ i }} d-{{ a }}" ondragover="allowDrop(event)" ondrop="drop(event)">
+             {% with cell_name='cell w-'|add:i|add:' d-'|add:a %}
+                {% if cell_data.cellName == cell_name %}
+                    {{ cell_data.scheduleText }}
+                {% endif %}
+            {% endwith %}
+            </div>
             {% endfor %}
             <div class="border-right"><!--Полоса разделяющая дни недели--></div>
             {% endfor %}

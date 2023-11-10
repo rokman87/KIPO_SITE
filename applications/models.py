@@ -115,7 +115,7 @@ class WorkLoads(models.Model):
     groups = models.ManyToManyField(Groups)
     teachers = models.ManyToManyField(Teachers)
     cabinets = models.ManyToManyField(Cabinets)
-    lessons_count = models.PositiveIntegerField()
+    lessons_count = models.PositiveIntegerField(default=0)
     schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='workloads')
 
     def __str__(self):
