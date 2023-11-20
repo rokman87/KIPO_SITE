@@ -5,13 +5,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log("saveButton EventListener");
         event.preventDefault();
         const cells = document.querySelectorAll(".cell");
+
         let cellsData = [];
 
         cells.forEach((cell) => {
             const dataElementId = cell.getAttribute("data-id");
+            const group = document.querySelectorAll(".caption");
             const text = cell.textContent.trim();
             const cellName = cell.className;
-
+            const group = cell.group;
             // Сохраняем данные только для заполненных ячеек
 
             if (dataElementId && text) {
@@ -20,7 +22,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let cellData = {
                     text: text,
                     dataElementId: dataElementId,
-                    cellName: cellName
+                    cellName: cellName,
+                    group: group
                 };
 
                 console.log(cellData);  // Выводим каждое сохраняемое значение перед добавлением его в массив
