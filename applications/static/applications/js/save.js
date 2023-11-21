@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     const saveButton = document.getElementById("saveButton");
 
     saveButton.addEventListener("click", (event) => {
-        console.log("saveButton EventListener");
+        console.log("Обработчик события для кнопки сохранения");
         event.preventDefault();
         const cells = document.querySelectorAll(".cell");
 
@@ -10,12 +10,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         cells.forEach((cell) => {
             const dataElementId = cell.getAttribute("data-id");
-            const group = document.querySelectorAll(".caption");
             const text = cell.textContent.trim();
             const cellName = cell.className;
-            const group = cell.group;
-            // Сохраняем данные только для заполненных ячеек
-
+            const originalString = cell.parentElement.textContent.trim();// Текст родительского элемента
+            const parentText = originalString.substring(0, originalString.indexOf('\n'));
+            // Проверка и сохранение данных только для заполненных ячеек
             if (dataElementId && text) {
                 console.log("Сохраняем данные ячейки");
 
@@ -23,10 +22,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: text,
                     dataElementId: dataElementId,
                     cellName: cellName,
-                    group: group
+                    group: parentText // Добавляем текст родительского элемента
                 };
 
-                console.log(cellData);  // Выводим каждое сохраняемое значение перед добавлением его в массив
+                console.log(cellData); // Выводим каждое сохраняемое значение перед добавлением его в массив
 
                 cellsData.push(cellData);
             }
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: JSON.stringify(cellsData),
             headers:{
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken  // Добавляем CSRF токен в заголовок запроса
+                'X-CSRFToken': csrftoken // Добавляем CSRF токен в заголовок запроса
             }
         }).then(res => res.json())
         .catch(error => console.error(error))

@@ -130,6 +130,7 @@ class LessonsCells(models.Model):
     text = models.CharField('Текст', max_length=50)
     dataElementId = models.ManyToManyField(WorkLoads)
     cellName = models.CharField('Место', max_length=50)
+    group = models.CharField('Группа', max_length=50)
     def __str__(self):
         return self.text
 

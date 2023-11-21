@@ -321,7 +321,8 @@ class SaveCellData(View):
             # Создаем новый объект 'LessonsCells'
             new_cell = LessonsCells.objects.create(
                 text=cell.get('text'),
-                cellName=cell.get('cellName')
+                cellName=cell.get('cellName'),
+                group = cell.get('group')
             )
 
             # Добавляем 'WorkLoads' к новому объекту 'LessonsCells'
@@ -337,7 +338,8 @@ def loadData(request, app_id):
         data.append({
             'text': lesson_cell.text,
             'dataElementId': lesson_cell.dataElementId.first().id if lesson_cell.dataElementId.exists() else None,
-            'cellName': lesson_cell.cellName
+            'cellName': lesson_cell.cellName,
+            'group': lesson_cell.group
         })
     return JsonResponse(data, safe=False)
 

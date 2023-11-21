@@ -62,11 +62,11 @@
             {% for i in lessons_days_number %}
             {% for a in lesson_numbers %}
             <div class="cell w-{{ i }} d-{{ a }}" ondragover="allowDrop(event)" ondrop="drop(event)">
-             {% with cell_name='cell w-'|add:i|add:' d-'|add:a %}
+                {% with cell_name='cell w-'|add:i|add:' d-'|add:a %}
                 {% if cell_data.cellName == cell_name %}
-                    {{ cell_data.scheduleText }}
+                {{ cell_data.scheduleText }}
                 {% endif %}
-            {% endwith %}
+                {% endwith %}
             </div>
             {% endfor %}
             <div class="border-right"><!--Полоса разделяющая дни недели--></div>
@@ -77,24 +77,23 @@
     <div class="workloads-interface">
         <button id="saveButton">Сохранить</button>
         <div class="instances">
-        {% for el in instances %}
-        <div class="element">
-            <div class="draggable" draggable="true" ondragstart="drag(event)" style="background-color:{{ el.color }}"
-                 data="{{ el.id }}">{{ el.subjects }}
+            {% for el in instances %}
+            <div class="element">
+                <div class="draggable" draggable="true" ondragstart="drag(event)"
+                     style="background-color:{{ el.color }}"
+                     data="{{ el.id }}">{{ el.subjects }}
+                </div>
+                | <p>{{ el.lessons_count }}</p>
             </div>
-            | <p>{{ el.lessons_count }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
-        </div>
-<div class="info-window">
-        <div id="workload-info" class="workload-info" style="display:none;">
+        <div class="info-window">
+            <div id="workload-info" class="workload-info" style="display:none;">
+
+            </div>
 
         </div>
-
-</div>
     </div>
-
-<div id="table-container">[e</div>
 
 </div>
 
