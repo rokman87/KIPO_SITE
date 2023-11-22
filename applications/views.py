@@ -1,14 +1,22 @@
-from django.shortcuts import render, redirect
-from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads, LessonsCells
-from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
-from users.models import Applications
+# Стандартные библиотеки Python
 from datetime import datetime, timedelta
+import json
+
+#Django
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core import serializers
 from django.views import View
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
-import json
+from django.db import transaction
+
+# Сторонние библиотеки
+from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads, LessonsCells
+from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
+from users.models import Applications
+
+
 
 # Общая функция для обработки форм и моделей
 def handle_form(request, app_id, model_class, form_class, template_name):
@@ -324,12 +332,36 @@ class SaveCellData(View):
                 cellName=cell.get('cellName'),
                 group = cell.get('group')
             )
+            lessons_cells_id = new_cell.pk
 
             # Добавляем 'WorkLoads' к новому объекту 'LessonsCells'
             new_cell.dataElementId.add(*loads)
 
+            # Вызываем функцию с ID объекта LessonsCells, чтобы уменьшить lessons_count и связать с объектом WorkLoads
+            update_workloads_lessons_count(lessons_cells_id)
+
         # Возвращаем успех, если всё прошло по плану
         return JsonResponse({'status 3': 'Super success'})
+
+
+
+@transaction.atomic
+def update_workloads_lessons_count(lessons_cells_id):
+        # Получаем объект LessonsCells по его id
+        lessons_cells = LessonsCells.objects.get(pk=lessons_cells_id)
+
+        # Получаем связанный с LessonsCells объект WorkLoads (может быть другая логика выбора)
+        workloads = lessons_cells.dataElementId.first()
+
+        if workloads:
+            # Уменьшаем lessons_count на 1
+            workloads.lessons_count = workloads.lessons_count - 1
+            workloads.save()
+
+            # Добавляем связь между LessonsCells и WorkLoads (может потребоваться дополнительная логика здесь)
+            lessons_cells.dataElementId.add(workloads)
+
+
 
 def loadData(request, app_id):
     data = []

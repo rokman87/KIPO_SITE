@@ -14,24 +14,21 @@ function fillTableCells(data) {
         var cellClass = item.cellName;
         var parentCell = item.group;
         var cells = document.getElementsByClassName(cellClass);
-
+//        console.log("cellClass "+cellClass);
+//        console.log("parentCell "+parentCell);
+//        console.log(cells);
+//        console.log(cells.length);
         if (cells.length > 0) {
             for (var i = 0; i < cells.length; i++) {
-//                 Обращаемся к родительскому элементу для каждой ячейки
                 var parentText = cells[i].parentElement.textContent.trim();
-//                var parentText = originalString.substring(0, originalString.indexOf('\n'));
-//                console.log(cells[i]);
-//                console.log("parentText = " + parentText);
-//                console.log("parentCell = " + parentCell);
-                if (cells[i].classList.value === cellClass && parentCell === parentText) {
+                var parts = parentText.split(/\s+/);
+//                   console.log("parentText ="+parentText);
+//                   console.log("parts[0] ="+parts[0]);
+                if (cells[i].classList.value === cellClass && parentCell === parts[0]) {
+//                 console.log("Вставляем текст");
                     cells[i].textContent = item.text;
                 }
             }
         }
     });
 }
-
-
-
-
-
