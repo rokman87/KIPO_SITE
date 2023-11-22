@@ -347,15 +347,19 @@ class SaveCellData(View):
 
 @transaction.atomic
 def update_workloads_lessons_count(lessons_cells_id):
-        # Получаем объект LessonsCells по его id
-        lessons_cells = LessonsCells.objects.get(pk=lessons_cells_id)
+    # Получаем объект LessonsCells по его id
+    lessons_cells = LessonsCells.objects.get(pk=lessons_cells_id)
 
-        # Получаем связанный с LessonsCells объект WorkLoads (может быть другая логика выбора)
-        workloads = lessons_cells.dataElementId.first()
+    # Получаем связанный с LessonsCells объект WorkLoads (может быть другая логика выбора)
+    workloads = lessons_cells.dataElementId.first()
 
-        if workloads:
-            # Уменьшаем lessons_count на 1
-            workloads.lessons_count = workloads.lessons_count - 1
+    if workloads:
+        # Уменьшаем lessons_count на 1
+        workloads.lessons_count = workloads.lessons_count - 1
+
+        if workloads.lessons_count <= 0:  # Если lessons_count стал меньше или равен нулю
+            workloads.delete()  # Удаляем объект WorkLoads
+        else:
             workloads.save()
 
             # Добавляем связь между LessonsCells и WorkLoads (может потребоваться дополнительная логика здесь)
