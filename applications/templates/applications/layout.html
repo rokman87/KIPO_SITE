@@ -3,8 +3,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
     {% block links %}{% endblock %}
@@ -15,18 +14,15 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
-
 <aside class="sidebar">
     <span class="logo">SITE_KIPO</span>
     <ul class="nav">
         <li><a id="sched_link" href="/applications/{{ app_id }}/schedules"><i class="fa-solid fa-bars"></i> Расписания</a></li>
-
         <h3>{{ title }}</h3>
     </ul>
     {% if title != "Не выбрано!" %}
     <ul class="nav" id="sched-elem">
         <li><a href="/applications/{{ app_id }}/bells"><i class="fa-regular fa-bell"></i> Звонки</a></li>
-        <!--        <li><a href="/applications/{{ app_id }}/work_times">Рабочее время</a></li>-->
         <li><a href="/applications/{{ app_id }}/workloads"><i class="fa-solid fa-briefcase"></i> Нагрузка</a></li>
         <li><a href="/applications/{{ app_id }}/lessons"><i class="fa-regular fa-calendar-days"></i> Сетка уроков</a></li>
         <li><a href="/applications/{{ app_id }}/print/schedule"><i class="fa-solid fa-print"></i> Печать</a></li>
@@ -37,7 +33,6 @@
         <li><a href="/applications/{{ app_id }}/subjects"><i class="fa-solid fa-book"></i> Предметы</a></li>
         <li><a href="/applications/{{ app_id }}/teachers"><i class="fa-solid fa-user-tie"></i> Преподаватели</a></li>
         <li><a href="/applications/{{ app_id }}/cabinets"><i class="fa-solid fa-hotel"></i> Аудитории</a></li>
-        <!--        <li><a href="/applications/{{ app_id }}/types_lessons">Вид занятий</a></li>-->
     </ul>
     <ul class="nav">
         <li><a href="/applications/{{ app_id }}/publication"><i class="fa-brands fa-slack"></i> Публикация</a></li>
