@@ -1,7 +1,49 @@
 {% extends 'applications/layout.html' %}
-
+{% load static %}
 {% block title %}Печать{% endblock %}
-
+{% block styles %}
+<link rel="stylesheet" href="{% static 'applications/css/print.css' %}">
+{% endblock %}
 {% block content %}
+<head>
+    <style>
+        table   {
+                border-collapse: collapse;
+                width: 100%;
+                }
+        th, td  {
+                border: 1px solid black;
+                text-align: center;
+                }
+        th      {
+                background-color: #f2f2f2;
+                height: 40px;
+                }
+    </style>
+
+</head>
+<table>
+    <tr>
+        <th rowspan="2">Группы</th>
+        <th colspan="{{ days_in_week }}">Дни недели</th>
+    </tr>
+    <tr>
+        {% for day in range_days %} <!-- Перебор дней недели -->
+            <th colspan="8">{{ day }}</th>
+        {% endfor %}
+    </tr>
+    <!-- Пример данных таблицы -->
+    {% for group, schedule in schedules.items %}
+        <tr>
+            <td>{{ group }}</td>
+            {% for entry in schedule %}
+        <td>{{ entry }}</td>
+        {% if forloop.counter|divisibleby:days_in_week %}
+            </tr><tr>
+        {% endif %}
+    {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}

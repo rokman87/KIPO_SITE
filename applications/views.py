@@ -259,10 +259,22 @@ def lessons(request, app_id):
 
 def printSchedule(request, app_id):
     week_title = find_week_title(request)
+
     data = {
+        'days_in_week': 7*8,  # Количество дней в неделе
+        'range_days': ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],  # Список дней недели
+        'schedules': {
+            'Группа 1': [' ', ' ', ' ', ' ', ' ', ' '],
+            'Группа 2': [' ', ' ', ' ', ' ', ' ', ' '],
+            'Группа 3': [' ', ' ', ' ', ' ', ' ', ' '],
+            'Группа 4': [' ', ' ', ' ', ' ', ' ', ' '],
+            'Группа 5': [' ', ' ', ' ', ' ', ' ', ' '],
+
+        },
         'app_id': app_id,
         'title': week_title
     }
+
     return render(request, 'applications/printSchedule.html', data)
 
 
