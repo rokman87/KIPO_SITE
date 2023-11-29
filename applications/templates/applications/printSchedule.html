@@ -3,38 +3,38 @@
 {% block title %}Печать{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'applications/css/print.css' %}">
-{% endblock %}
-{% block content %}
-<head>
-    <style>
-        table{
+<style>
+    table {
         border-collapse: collapse;
         width: 100%;
         white-space: nowrap;
-        }
+    }
 
-        th, td{
+    th, td {
         border: 1px solid black;
         text-align: center;
         white-space: nowrap;
-        }
+    }
 
-        th{
+    th {
         background-color: #f2f2f2;
         height: 40px;
         width: 60px;
-        }
+    }
 
-        .groupName {
-            writing-mode: vertical-rl;
-            white-space: nowrap;
-            font-size: 16px;
-            transform: rotate(180deg);
-            font-weight: bold;
-        }
-    </style>
-
-</head>
+    .groupName {
+        writing-mode: vertical-rl;
+        white-space: nowrap;
+        font-size: 16px;
+        transform: rotate(180deg);
+        font-weight: bold;
+    }
+    .cell {
+    width: 50px;
+    }
+</style>
+{% endblock %}
+{% block content %}
 <table>
     <tr>
         <th rowspan="2">Группы</th>
@@ -50,7 +50,17 @@
     <tr>
         <td class="groupName">{{ group }}</td>
         {% for entry in schedule %}
-        <td>{{ entry }}</td>
+        <td class="cell">{{ entry }}</td>
+        {% if forloop.counter|divisibleby:days_in_week %}
+    </tr>
+    <tr>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    <tr> <!-- Добавленная строка для аудиторий -->
+        <td class="auditorium">АУД</td>
+        {% for entry in schedule %}
+        <td class="cell">{{ entry }}</td>
         {% if forloop.counter|divisibleby:days_in_week %}
     </tr>
     <tr>
@@ -59,5 +69,4 @@
     </tr>
     {% endfor %}
 </table>
-
 {% endblock %}
