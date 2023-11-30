@@ -143,7 +143,7 @@ def delete_schedule(request, app_id, element_id, table, elem):
     return redirect(f'/applications/{app_id}/{elem}')
 
 
-# Измените функцию schedules
+
 def schedules(request, app_id):
     if request.method == 'POST':
         if 'action' in request.POST and request.POST['action'] == 'del':
@@ -239,8 +239,7 @@ def lessons(request, app_id):
     groups = Groups.objects.all()
     groups_filter = groups.filter(application_id=app_id)
 
-    instances = WorkLoads.objects.filter(schedule_id=sched_id)
-
+    instances = WorkLoads.objects.filter(schedule_id=sched_id, lessons_count__gt=0).order_by('lessons_count')
 
 
     data = {
@@ -316,7 +315,7 @@ def clear_cookie(request):
 
 
 def get_workload(request, workload_id):
-    workload = WorkLoads.objects.get(pk=workload_id)
+    workload = WorkLoads.objects.get(pk=workload_id, lessons_count__gt=0)
     serialized_workload = serializers.serialize('json', [workload])
     return JsonResponse(serialized_workload, safe=False)
 
@@ -378,13 +377,13 @@ def update_workloads_lessons_count(lessons_cells_id):
         # Уменьшаем lessons_count на 1
         workloads.lessons_count = workloads.lessons_count - 1
 
-        if workloads.lessons_count <= 0:  # Если lessons_count стал меньше или равен нулю
-            workloads.delete()  # Удаляем объект WorkLoads
-        else:
-            workloads.save()
+        # if workloads.lessons_count <= 0:  # Если lessons_count стал меньше или равен нулю
+        #     workloads.delete()  # Удаляем объект WorkLoads
+        # else:
+        workloads.save()
 
             # Добавляем связь между LessonsCells и WorkLoads (может потребоваться дополнительная логика здесь)
-            lessons_cells.dataElementId.add(workloads)
+        lessons_cells.dataElementId.add(workloads)
 
 
 
