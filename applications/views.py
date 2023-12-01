@@ -274,13 +274,17 @@ def printSchedule(request, app_id):
         # Добавляем данные группы в словарь с ключом 'Группа {id}'
         groups_data[f' {group.title}'] = group_schedule
 
+    les_range = range(1, 7)  # Создание диапазона от 1 до 6
+    day_range = range(1, 9)  # Создание диапазона от 1 до 8
     # Формируем общий словарь данных
     data = {
         'days_in_week': 7 * 8,  # Количество дней в неделе
         'range_days': ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],  # Список дней недели
         'schedules': groups_data,
         'app_id': app_id,
-        'title': week_title
+        'title': week_title,
+        'les_range': les_range,
+        'day_range': day_range,
     }
 
     return render(request, 'applications/printSchedule.html', data)

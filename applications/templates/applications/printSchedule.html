@@ -22,23 +22,23 @@
     {% for group, schedule in schedules.items %}
     <tr>
         <td class="groupName">{{ group }}</td>
-        {% for entry in schedule %}
-        <td class="cell">{{ entry }}</td>
-        {% if forloop.counter|divisibleby:days_in_week %}
+        {% for i in les_range %}
+            {% for j in day_range %}
+            <td class="cell w-{{ i }} d-{{ j }}">{{ entry }}</td>
+            {% endfor %}
+        {% endfor %}
     </tr>
     <tr>
-        {% endif %}
-        {% endfor %}
     </tr>
     <tr> <!-- Добавленная строка для аудиторий -->
         <td class="auditorium">АУД</td>
-        {% for entry in schedule %}
-        <td class="cell">{{ entry }}</td>
-        {% if forloop.counter|divisibleby:days_in_week %}
+         {% for i in les_range %}
+            {% for j in day_range %}
+            <td class="cell w-{{ i }} d-{{ j }}{{ group }}">{{ entry }}</td>
+            {% endfor %}
+        {% endfor %}
     </tr>
     <tr>
-        {% endif %}
-        {% endfor %}
     </tr>
     {% endfor %}
 </table>
