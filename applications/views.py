@@ -403,3 +403,15 @@ def loadData(request, app_id):
         })
     return JsonResponse(data, safe=False)
 
+def print_schedule(request, app_id):
+    data = []
+    lessons_cells = LessonsCells.objects.all()
+    for lesson_cell in lessons_cells:
+        data.append({
+            'text': lesson_cell.text,
+            'dataElementId': lesson_cell.dataElementId.first().id if lesson_cell.dataElementId.exists() else None,
+            'cellName': lesson_cell.cellName,
+            'group': lesson_cell.group
+        })
+
+    return JsonResponse(data, safe=False)

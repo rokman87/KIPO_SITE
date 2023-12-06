@@ -18,6 +18,7 @@ urlpatterns = [
     path('<int:app_id>/publication/', views.publication, name='publication'),
     path('<int:app_id>/settings/', views.settings, name='settings'),
     path('<int:app_id>/lessons/loadData/', views.loadData, name='loadData'),
+    path('<int:app_id>/print/schedule/print_schedule/', views.print_schedule, name='print_schedule'),
     path('ajax/get_workload/<int:workload_id>/', views.get_workload, name='get_workload'),
 
 
