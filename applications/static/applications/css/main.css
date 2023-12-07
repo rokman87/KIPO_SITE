@@ -37,7 +37,6 @@ h1 {
     width: 12%;
     background-color: var(--second-background);
     padding: 2px 5px 0px 15px;
-    height: 100vh;
     border-right: 2px solid var(--border);
         position: initial;
 }
