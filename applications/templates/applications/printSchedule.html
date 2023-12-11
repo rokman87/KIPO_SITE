@@ -10,8 +10,8 @@
 {% block content %}
 <table>
     <tr>
-        <th rowspan="2">Группы</th>
-        <th colspan="{{ days_in_week }}">Дни недели</th>
+        <th class="group_head" rowspan="2">Группы</th>
+        <th class="week_head" colspan="{{ days_in_week }}">Дни недели</th>
     </tr>
     <tr>
         {% for day in range_days %} <!-- Перебор дней недели -->
@@ -28,17 +28,13 @@
             {% endfor %}
         {% endfor %}
     </tr>
-    <tr>
-    </tr>
     <tr> <!-- Добавленная строка для аудиторий -->
         <td class="auditorium">АУД</td>
          {% for i in les_range %}
             {% for j in day_range %}
-            <td class="cell w-{{ i }} d-{{ j }}{{ group }}">{{ entry }}</td>
+            <td class="auditorium_cell" id="cell w-{{ i }} d-{{ j }}" group="{{ group }}">{{ entry }}</td>
             {% endfor %}
         {% endfor %}
-    </tr>
-    <tr>
     </tr>
     {% endfor %}
 </table>

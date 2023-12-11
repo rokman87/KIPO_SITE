@@ -15,7 +15,7 @@ from django.db import transaction
 from .models import Groups, Subjects, Teachers, Cabinets, Schedules, Bells, WorkLoads, LessonsCells
 from .forms import GroupsForm, SubjectsForm, TeachersForm, CabinetsForm, SchedulesForm, BellForm, WorkLoadsForm
 from users.models import Applications
-
+from django.db.models import Q
 
 
 # Общая функция для обработки форм и моделей
@@ -272,7 +272,7 @@ def printSchedule(request, app_id):
             ' ' for _ in range(48)  # Создаем список из 48 пробелов логика заполнения
         ]
         # Добавляем данные группы в словарь с ключом 'Группа {id}'
-        groups_data[f' {group.title}'] = group_schedule
+        groups_data[f'{group.title}'] = group_schedule
 
     les_range = range(1, 7)  # Создание диапазона от 1 до 6
     day_range = range(1, 9)  # Создание диапазона от 1 до 8
@@ -289,6 +289,25 @@ def printSchedule(request, app_id):
 
     return render(request, 'applications/printSchedule.html', data)
 
+def aud(request, app_ad):
+
+
+    # Предположим, у вас есть переменные, содержащие значения атрибутов из HTML
+    cell_name = 'cell w-1 d-5'
+    group = '20пкс'
+
+    # Находим объекты LessonsCells, удовлетворяющие указанным условиям
+    lessons_cells = LessonsCells.objects.filter(cellName=cell_name, group=group)
+
+    # Получаем связанные объекты WorkLoads для найденных LessonsCells
+    for lesson_cell in lessons_cells:
+        work_loads = lesson_cell.dataElementId.all()  # Получаем связанные объекты WorkLoads
+        for work_load in work_loads:
+            # Получаем связанные объекты Cabinets для найденных WorkLoads
+            cabinets = work_load.cabinets.all()
+            for cabinet in cabinets:
+                # Делаем что-то с найденными объектами Cabinets
+                print(f"Найденный кабинет: {cabinet.title}{cabinet.building}")  # Пример вывода имени кабинета
 
 def types_lessons(request, app_id):
     return render(request, 'applications/types_lessons.html', {'app_id': app_id})

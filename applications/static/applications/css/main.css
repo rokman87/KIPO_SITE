@@ -9,6 +9,11 @@
   --table-border-color: black;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 /*Верхняя панель*/
 header {
@@ -170,3 +175,4 @@ table.table {
     width: 100%;
     margin: auto;
 }
+

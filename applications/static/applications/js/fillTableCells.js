@@ -27,3 +27,4 @@ function fillTableCells(data) {
         }
     });
 }
+
