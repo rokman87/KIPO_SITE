@@ -9,6 +9,7 @@ $(document).ready(function() {
         }
     });
 });
+
 function print_schedule(data) {
     data.forEach(function(item) {
         var cellClass = item.cellName;
@@ -22,6 +23,24 @@ function print_schedule(data) {
                 if (cells[i].classList.value === cellClass && parentCell === parts[0]) {
                     cells[i].dataset.id = dataElementId;
                     cells[i].textContent = item.text;
+
+                    // AJAX-запрос для получения информации о кабинете по dataElementId
+                    $.ajax({
+                        url: "get_cabinet_info/", // Укажите URL для получения информации о кабинете
+                        method: "GET",
+                        data: {dataElementId: dataElementId},
+                        dataType: 'json',
+                        success: function(cabinetData) {
+                            // Вставка информации о кабинете в ячейку расписания
+                            console.log("Второй ajax");
+                            console.log(cabinetInfo.title); // Выводит значение ключа 'title' из словаря
+                            console.log(cabinetInfo.building);
+                            var title = cabinetInfo.title;
+                            var building = cabinetInfo.building;
+                            console.log(title + ' в здании ' + building);
+//                          cells[i].textContent += title + ' в здании ' + building;
+                        }
+                    });
                 }
             }
         }

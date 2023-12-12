@@ -434,3 +434,26 @@ def print_schedule(request, app_id):
         })
 
     return JsonResponse(data, safe=False)
+
+def get_cabinet_info(request, app_id):
+    if request.method == 'GET':
+        data_element_id = request.GET.get('dataElementId')  # Получаем dataElementId из запроса AJAX
+
+        # Получаем информацию о кабинете на основе dataElementId
+        try:
+            work_load = WorkLoads.objects.get(id=data_element_id)
+            cabinets_info = work_load.cabinets.all()  # Получаем связанные сущности Cabinets
+
+            # Пример формирования информации о кабинете для ответа на запрос AJAX
+            cabinet_data = []
+            for cabinet in cabinets_info:
+                cabinet_data.append({
+                    'title': cabinet.title,
+                    'building': cabinet.building,
+                })
+
+            return JsonResponse({'cabinetInfo': cabinet_data}, json_dumps_params={'ensure_ascii': False})  # Отправляем информацию о кабинете в формате JSON
+        except WorkLoads.DoesNotExist:
+            return JsonResponse({'error': 'WorkLoad с данным id не существует'})
+    else:
+        return JsonResponse({'error': 'Метод запроса не поддерживается'})
