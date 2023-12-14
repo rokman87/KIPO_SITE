@@ -32,9 +32,9 @@ function print_schedule(data) {
                             data: { dataElementId: dataElementId },
                             dataType: 'json',
                             success: function (cabinetInfo) {
-                                console.log("Второй ajax");
-                                console.log(cabinetInfo.title);
-                                console.log(cabinetInfo.building);
+
+                                console.log('title= ' +cabinetInfo.title);
+                                console.log('building= ' +cabinetInfo.building);
                                 var title = cabinetInfo.title;
                                 var building = cabinetInfo.building;
                                 console.log( building+ ', ауд. ' + title);
