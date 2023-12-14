@@ -445,14 +445,14 @@ def get_cabinet_info(request, app_id):
             cabinets_info = work_load.cabinets.all()  # Получаем связанные сущности Cabinets
 
             # Пример формирования информации о кабинете для ответа на запрос AJAX
-            cabinet_data = []
+            cabinetData = []
             for cabinet in cabinets_info:
-                cabinet_data.append({
+                cabinetData.append({
                     'title': cabinet.title,
                     'building': cabinet.building,
                 })
 
-            return JsonResponse({'cabinetInfo': cabinet_data}, json_dumps_params={'ensure_ascii': False})  # Отправляем информацию о кабинете в формате JSON
+            return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False})  # Отправляем информацию о кабинете в формате JSON
         except WorkLoads.DoesNotExist:
             return JsonResponse({'error': 'WorkLoad с данным id не существует'})
     else:

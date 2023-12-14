@@ -18,30 +18,31 @@ function print_schedule(data) {
         var cells = document.getElementsByClassName(cellClass);
         if (cells.length > 0) {
             for (var i = 0; i < cells.length; i++) {
-                var parentText = cells[i].parentElement.textContent.trim();
-                var parts = parentText.split(/\s+/);
-                if (cells[i].classList.value === cellClass && parentCell === parts[0]) {
-                    cells[i].dataset.id = dataElementId;
-                    cells[i].textContent = item.text;
+                (function(cell) { // Создаем замыкание для сохранения текущей ячейки
+                    var parentText = cell.parentElement.textContent.trim();
+                    var parts = parentText.split(/\s+/);
+                    if (cell.classList.value === cellClass && parentCell === parts[0]) {
+                        cell.dataset.id = dataElementId;
+                        cell.textContent = item.text;
 
-                    // AJAX-запрос для получения информации о кабинете по dataElementId
-                    $.ajax({
-                        url: "get_cabinet_info/", // Укажите URL для получения информации о кабинете
-                        method: "GET",
-                        data: {dataElementId: dataElementId},
-                        dataType: 'json',
-                        success: function(cabinetData) {
-                            // Вставка информации о кабинете в ячейку расписания
-                            console.log("Второй ajax");
-                            console.log(cabinetInfo.title); // Выводит значение ключа 'title' из словаря
-                            console.log(cabinetInfo.building);
-                            var title = cabinetInfo.title;
-                            var building = cabinetInfo.building;
-                            console.log(title + ' в здании ' + building);
-//                          cells[i].textContent += title + ' в здании ' + building;
-                        }
-                    });
-                }
+                        // AJAX-запрос для получения информации о кабинете по dataElementId
+                        $.ajax({
+                            url: "get_cabinet_info/",
+                            method: "GET",
+                            data: { dataElementId: dataElementId },
+                            dataType: 'json',
+                            success: function (cabinetInfo) {
+                                console.log("Второй ajax");
+                                console.log(cabinetInfo.title);
+                                console.log(cabinetInfo.building);
+                                var title = cabinetInfo.title;
+                                var building = cabinetInfo.building;
+                                console.log( building+ ', ауд. ' + title);
+                                cell.textContent += building+ ', ауд. ' + title;
+                            }
+                        });
+                    }
+                })(cells[i]); // Передаем cells[i] в функцию-замыкание
             }
         }
     });
