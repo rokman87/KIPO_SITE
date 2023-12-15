@@ -32,13 +32,16 @@ function print_schedule(data) {
                             data: { dataElementId: dataElementId },
                             dataType: 'json',
                             success: function (cabinetInfo) {
-
-                                console.log('title= ' +cabinetInfo.title);
-                                console.log('building= ' +cabinetInfo.building);
+                            console.log('ajax start');
+                                var str = JSON.stringify(cabinetInfo);
+                                console.log(str);
+                                console.log('title = ' +cabinetInfo.title);
+                                console.log('building = ' +cabinetInfo.building);
                                 var title = cabinetInfo.title;
                                 var building = cabinetInfo.building;
                                 console.log( building+ ', ауд. ' + title);
                                 cell.textContent += building+ ', ауд. ' + title;
+                            console.log('ajax end');
                             }
                         });
                     }

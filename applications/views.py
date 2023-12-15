@@ -452,7 +452,7 @@ def get_cabinet_info(request, app_id):
                     'building': cabinet.building,
                 })
 
-            return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False})  # Отправляем информацию о кабинете в формате JSON
+            return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False}, safe=False)  # Отправляем информацию о кабинете в формате JSON
         except WorkLoads.DoesNotExist:
             return JsonResponse({'error': 'WorkLoad с данным id не существует'})
     else:
