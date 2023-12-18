@@ -450,8 +450,9 @@ def get_cabinet_info(request, app_id):
                 cabinetData.append({
                     'title': cabinet.title,
                     'building': cabinet.building,
+                    'dataElementId': data_element_id,
                 })
-
+                print('Информация о кабинете:', cabinetData)
             return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False}, safe=False)  # Отправляем информацию о кабинете в формате JSON
         except WorkLoads.DoesNotExist:
             return JsonResponse({'error': 'WorkLoad с данным id не существует'})
