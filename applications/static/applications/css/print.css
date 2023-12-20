@@ -1,44 +1,55 @@
-tbody, td, tfoot, th, thead, tr{
-    border: black solid 1px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    white-space: nowrap;
-    table-layout: fixed; /* Фиксированная ширина столбцов */
-}
-
-th, td {
-    border: 1px solid black;
-    text-align: center;
-    white-space: nowrap;
-}
-
-th {
-    background-color: #f2f2f2;
-    height: 40px;
-}
-
 .groupName {
-    writing-mode: vertical-rl;
     white-space: nowrap;
     font-size: 16px;
-    transform: rotate(180deg);
     font-weight: bold;
-}
+    }
+
 .cell {
     height: 170px;
-    writing-mode: vertical-rl;
     white-space: nowrap;
     font-size: 16px;
-    transform: rotate(180deg);
-}
-html, body {
-    height: auto;
-    margin: 0;
-    padding: 0;
-}
+    }
+
 th.group_head {
     width: 5%;
-}
+    }
+
+body, html {
+    height: 100%;
+    margin: 0;
+    }
+
+th.week_head {
+    text-align: center;
+    background: beige;
+    }
+
+th {
+    text-align: center;
+    background: beige;
+    }
+
+th.week_head, th{
+    border: 1px solid black;
+    }
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* горизонтальная прокрутка */
+    }
+
+table {
+    text-align: center;
+    width: auto;
+    min-width: 200%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    height: 100%;
+    }
+
+td {
+    border: 1px solid black;
+    width: 40px;
+    max-width: 40px;
+    word-wrap: break-word;
+    }

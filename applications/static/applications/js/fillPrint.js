@@ -59,18 +59,11 @@ function handleCabinetInfo(cabinetInfo, cell) {
         var building = Item.building;
 
         if (title && building) {
-            console.log('title = ' + title);
-            console.log('building = ' + building);
-            console.log(building + ', ауд. ' + title);
             cell.textContent += building + ', ауд. ' + title;
-
-
         } else {
             console.error('title или building пусты или не содержат ожидаемых данных');
         }
     } else {
-        console.log(cabinetInfo);
-        console.log(cabinetInfo.length);
         console.error('cabinetInfo пуст или не содержит ожидаемых данных');
     }
 }
