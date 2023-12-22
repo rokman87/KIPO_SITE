@@ -10,10 +10,6 @@
     font-size: 16px;
     }
 
-th.group_head {
-    width: 5%;
-    }
-
 body, html {
     height: 100%;
     margin: 0;
@@ -41,15 +37,15 @@ th.week_head, th{
 table {
     text-align: center;
     width: auto;
-    min-width: 200%;
+    min-width: 500%;
     border-collapse: collapse;
     table-layout: fixed;
     height: 100%;
-    }
+}
 
 td {
     border: 1px solid black;
-    width: 40px;
-    max-width: 40px;
+    width: 150px;
+    max-width: 150px;
     word-wrap: break-word;
-    }
+}
