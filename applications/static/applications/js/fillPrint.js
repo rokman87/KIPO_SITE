@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var allDataElementIds = []; // Массив для хранения dataElementId
+
     // AJAX-запрос для получения расписания
     $.ajax({
         url: "print_schedule/",
@@ -9,31 +11,32 @@ $(document).ready(function() {
             print_schedule(data);
         }
     });
-});
 
-// Функция для обработки расписания
-function print_schedule(data) {
-    data.forEach(function(item) {
-        var cellClass = item.cellName;
-        var parentCell = item.group;
-        var dataElementId = item.dataElementId;
-        var cells = document.getElementsByClassName(cellClass);
-        if (cells.length > 0) {
-            for (var i = 0; i < cells.length; i++) {
-                (function(cell) {
-                    var parentText = cell.parentElement.textContent.trim();
-                    var parts = parentText.split(/\s+/);
-                    if (cell.classList.value == cellClass && parentCell == parts[0]) {
-                        cell.dataset.id = dataElementId;
-                        cell.textContent = item.text;
-                        // Вызов функции для получения информации о кабинете
-                        getCabinetInfo(dataElementId, cell);
-                    }
-                })(cells[i]);
+    // Функция для обработки расписания
+    function print_schedule(data) {
+        data.forEach(function(item) {
+            var cellClass = item.cellName;
+            var parentCell = item.group;
+            var dataElementId = item.dataElementId;
+            allDataElementIds.push(dataElementId); // Добавляем в массив
+
+            var cells = document.getElementsByClassName(cellClass);
+            if (cells.length > 0) {
+                for (var i = 0; i < cells.length; i++) {
+                    (function(cell) {
+                        var parentText = cell.parentElement.textContent.trim();
+                        var parts = parentText.split(/\s+/);
+                        if (cell.classList.value == cellClass && parentCell == parts[0]) {
+                            cell.dataset.id = dataElementId;
+                            cell.textContent = item.text;
+                            // Вызов функции для получения информации о кабинете
+                            getCabinetInfo(dataElementId, cell);
+                        }
+                    })(cells[i]);
+                }
             }
-        }
-    });
-}
+        });
+    }
 
 // Функция для выполнения AJAX-запроса и обработки информации о кабинете
 function getCabinetInfo(dataElementId, cell) {
@@ -67,3 +70,4 @@ function handleCabinetInfo(cabinetInfo, cell) {
         console.error('cabinetInfo пуст или не содержит ожидаемых данных');
     }
 }
+});

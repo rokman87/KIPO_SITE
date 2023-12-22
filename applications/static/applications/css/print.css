@@ -5,10 +5,10 @@
     }
 
 .cell {
-    height: 170px;
+    height: 110px;
     white-space: nowrap;
     font-size: 16px;
-    }
+}
 
 body, html {
     height: 100%;
@@ -31,7 +31,8 @@ th.week_head, th{
 
 .table-container {
     width: 100%;
-    overflow-x: auto; /* горизонтальная прокрутка */
+    overflow-x: auto;
+     overflow-y: auto;/* горизонтальная прокрутка */
     }
 
 table {
@@ -48,4 +49,8 @@ td {
     width: 150px;
     max-width: 150px;
     word-wrap: break-word;
+}
+
+td.less_count {
+    background: beige;
 }

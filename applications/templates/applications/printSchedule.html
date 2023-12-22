@@ -8,14 +8,23 @@
 </style>
 {% endblock %}
 {% block content %}
+<div class="table-container">
 <table>
+<!--    <tr>-->
+<!--        <th class="group_head">Группы</th>-->
+<!--    </tr>-->
     <tr>
         <th class="group_head" rowspan="2">Группы</th>
-        <th class="week_head" colspan="{{ days_in_week }}">Дни недели</th>
-    </tr>
-    <tr>
         {% for day in range_days %} <!-- Перебор дней недели -->
         <th colspan="8">{{ day }}</th>
+        {% endfor %}
+
+    </tr>
+    <tr>
+        {% for i in les_range %}
+            {% for j in day_range %}
+            <td class="less_count">{{ j }}</td>
+            {% endfor %}
         {% endfor %}
     </tr>
     <!-- Пример данных таблицы -->
@@ -38,6 +47,7 @@
     </tr>
     {% endfor %}
 </table>
+    </div>
 {% endblock %}
 {% block scripts %}
 <script src="{% static 'applications/js/fillPrint.js' %}"></script>

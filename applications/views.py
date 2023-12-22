@@ -450,6 +450,7 @@ def get_cabinet_info(request, app_id):
                 cabinetData.append({
                     'title': cabinet.title,
                     'building': cabinet.building,
+                    'cell': cell_info,
                     'dataElementId': data_element_id,
                 })
                 print('Информация о кабинете:', cabinetData)
