@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 import json
 
-#Django
+# Django
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core import serializers
@@ -143,7 +143,6 @@ def delete_schedule(request, app_id, element_id, table, elem):
     return redirect(f'/applications/{app_id}/{elem}')
 
 
-
 def schedules(request, app_id):
     if request.method == 'POST':
         if 'action' in request.POST and request.POST['action'] == 'del':
@@ -241,7 +240,6 @@ def lessons(request, app_id):
 
     instances = WorkLoads.objects.filter(schedule_id=sched_id, lessons_count__gt=0).order_by('lessons_count')
 
-
     data = {
         'app_id': app_id,
         'title': week_title,
@@ -289,9 +287,8 @@ def printSchedule(request, app_id):
 
     return render(request, 'applications/printSchedule.html', data)
 
+
 def aud(request, app_ad):
-
-
     # Предположим, у вас есть переменные, содержащие значения атрибутов из HTML
     cell_name = 'cell w-1 d-5'
     group = '20пкс'
@@ -308,6 +305,7 @@ def aud(request, app_ad):
             for cabinet in cabinets:
                 # Делаем что-то с найденными объектами Cabinets
                 print(f"Найденный кабинет: {cabinet.title}{cabinet.building}")  # Пример вывода имени кабинета
+
 
 def types_lessons(request, app_id):
     return render(request, 'applications/types_lessons.html', {'app_id': app_id})
@@ -336,13 +334,10 @@ def clear_cookie(request):
     response.delete_cookie('selectedElementId')
 
 
-
 def get_workload(request, workload_id):
     workload = WorkLoads.objects.get(pk=workload_id, lessons_count__gt=0)
     serialized_workload = serializers.serialize('json', [workload])
     return JsonResponse(serialized_workload, safe=False)
-
-
 
 
 @method_decorator(csrf_protect, name='dispatch')
@@ -367,13 +362,14 @@ class SaveCellData(View):
 
             # Если количество найденных объектов 'WorkLoads' не равно количеству id в 'loads_ids', что-то пошло не так
             if len(loads) != len(loads_ids):
-                return JsonResponse({'status 2': 'Error', 'message 2': f'Could not find all WorkLoads for data: {cell}.'})
+                return JsonResponse(
+                    {'status 2': 'Error', 'message 2': f'Could not find all WorkLoads for data: {cell}.'})
 
             # Создаем новый объект 'LessonsCells'
             new_cell = LessonsCells.objects.create(
                 text=cell.get('text'),
                 cellName=cell.get('cellName'),
-                group = cell.get('group')
+                group=cell.get('group')
             )
             lessons_cells_id = new_cell.pk
 
@@ -385,7 +381,6 @@ class SaveCellData(View):
 
         # Возвращаем успех, если всё прошло по плану
         return JsonResponse({'status 3': 'Super success'})
-
 
 
 @transaction.atomic
@@ -405,9 +400,8 @@ def update_workloads_lessons_count(lessons_cells_id):
         # else:
         workloads.save()
 
-            # Добавляем связь между LessonsCells и WorkLoads (может потребоваться дополнительная логика здесь)
+        # Добавляем связь между LessonsCells и WorkLoads (может потребоваться дополнительная логика здесь)
         lessons_cells.dataElementId.add(workloads)
-
 
 
 def loadData(request, app_id):
@@ -422,6 +416,7 @@ def loadData(request, app_id):
         })
     return JsonResponse(data, safe=False)
 
+
 def print_schedule(request, app_id):
     data = []
     lessons_cells = LessonsCells.objects.all()
@@ -435,26 +430,33 @@ def print_schedule(request, app_id):
 
     return JsonResponse(data, safe=False)
 
+
 def get_cabinet_info(request, app_id):
     if request.method == 'GET':
         data_element_id = request.GET.get('dataElementId')  # Получаем dataElementId из запроса AJAX
+        cell_class_name = request.GET.get('CellClassName')
 
         # Получаем информацию о кабинете на основе dataElementId
         try:
             work_load = WorkLoads.objects.get(id=data_element_id)
+            groups = work_load.groups.all()
             cabinets_info = work_load.cabinets.all()  # Получаем связанные сущности Cabinets
 
             # Пример формирования информации о кабинете для ответа на запрос AJAX
             cabinetData = []
-            for cabinet in cabinets_info:
-                cabinetData.append({
-                    'title': cabinet.title,
-                    'building': cabinet.building,
-                    'cell': cell_info,
-                    'dataElementId': data_element_id,
-                })
-                print('Информация о кабинете:', cabinetData)
-            return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False}, safe=False)  # Отправляем информацию о кабинете в формате JSON
+            for group in groups:
+                for cabinet in cabinets_info:
+                    cabinetData.append({
+                        'title': cabinet.title,
+                        'building': cabinet.building,
+                        'dataElementId': data_element_id,
+                        'CellClassName': cell_class_name,
+                        'group': group.title,
+                    })
+                    print('Информация о кабинете: ', cabinetData)
+                    print('CellClassName: ', cell_class_name)
+                return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False},
+                                safe=False)  # Отправляем информацию о кабинете в формате JSON
         except WorkLoads.DoesNotExist:
             return JsonResponse({'error': 'WorkLoad с данным id не существует'})
     else:

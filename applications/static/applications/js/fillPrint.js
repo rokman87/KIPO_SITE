@@ -40,12 +40,16 @@ $(document).ready(function() {
 
 // Функция для выполнения AJAX-запроса и обработки информации о кабинете
 function getCabinetInfo(dataElementId, cell) {
+var CellClassName = cell.getAttribute('class');
     $.ajax({
         url: "get_cabinet_info/",
         method: "GET",
-        data: { dataElementId: dataElementId },
+        data: { dataElementId: dataElementId,
+                CellClassName: CellClassName},
         dataType: 'json',
         success: function(cabinetInfo) {
+
+            console.log(CellClassName);
             handleCabinetInfo(cabinetInfo, cell);
         },
         error: function(error) {
