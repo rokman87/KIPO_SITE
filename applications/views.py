@@ -433,31 +433,31 @@ def print_schedule(request, app_id):
 
 def get_cabinet_info(request, app_id):
     if request.method == 'GET':
-        data_element_id = request.GET.get('dataElementId')  # Получаем dataElementId из запроса AJAX
-        cell_class_name = request.GET.get('CellClassName')
-
-        # Получаем информацию о кабинете на основе dataElementId
+        data_element_ids = request.GET.getlist('dataElementIds')  # Получаем dataElementIds из запроса AJAX
+        data_element_ids = data_element_ids[0]
+        data_element_ids_list = json.loads(data_element_ids)
+        print('data_element_ids: ', data_element_ids)
         try:
-            work_load = WorkLoads.objects.get(id=data_element_id)
-            groups = work_load.groups.all()
-            cabinets_info = work_load.cabinets.all()  # Получаем связанные сущности Cabinets
+            cabinet_data = []
+            for data_element_id in data_element_ids_list:
+                # Здесь можно использовать каждый data_element_id по отдельности
+                work_load = WorkLoads.objects.get(id=data_element_id)
+                groups = work_load.groups.all()
+                cabinets_info = work_load.cabinets.all()
 
-            # Пример формирования информации о кабинете для ответа на запрос AJAX
-            cabinetData = []
-            for group in groups:
                 for cabinet in cabinets_info:
-                    cabinetData.append({
+                    cabinet_data.append({
                         'title': cabinet.title,
                         'building': cabinet.building,
                         'dataElementId': data_element_id,
-                        'CellClassName': cell_class_name,
-                        'group': group.title,
+                        # Добавьте необходимые поля для CellClassName и group
                     })
-                    print('Информация о кабинете: ', cabinetData)
-                    print('CellClassName: ', cell_class_name)
-                return JsonResponse({'cabinetInfo': cabinetData}, json_dumps_params={'ensure_ascii': False},
-                                safe=False)  # Отправляем информацию о кабинете в формате JSON
-        except WorkLoads.DoesNotExist:
-            return JsonResponse({'error': 'WorkLoad с данным id не существует'})
+
+            # Возвращаем данные в формате JSON
+            return JsonResponse({'cabinetInfo': cabinet_data}, json_dumps_params={'ensure_ascii': False}, safe=False)
+
+        except ValueError:
+            return JsonResponse({'error': 'Неверный формат ID'})
+
     else:
         return JsonResponse({'error': 'Метод запроса не поддерживается'})

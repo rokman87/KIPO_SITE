@@ -119,7 +119,7 @@ class WorkLoads(models.Model):
     schedule_id = models.ForeignKey(Schedules, on_delete=models.CASCADE, related_name='workloads')
 
     def __str__(self):
-        return f'Subject: {self.subjects} - Groups: {", ".join(str(group) for group in self.groups.all())} - Teachers: {", ".join(str(teacher) for teacher in self.teachers.all())}'
+        return f'ID: {self.id} - Предмет: {self.subjects} - Группы: {", ".join(str(group) for group in self.groups.all())} - Преподаватели: {", ".join(str(teacher) for teacher in self.teachers.all())}'
 
     class Meta:
         verbose_name = 'Нагрузка'
@@ -132,6 +132,8 @@ class LessonsCells(models.Model):
     cellName = models.CharField('Место', max_length=50)
     group = models.CharField('Группа', max_length=50)
     def __str__(self):
-        return self.text
+        return f'ID: {self.id} - Предмет: {self.text}'
 
-
+    class Meta:
+        verbose_name = 'Сетка уроков'
+        verbose_name_plural = 'Сетки уроков'
