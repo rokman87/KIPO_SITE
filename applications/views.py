@@ -440,11 +440,9 @@ def get_cabinet_info(request, app_id):
         try:
             cabinet_data = []
             for data_element_id in data_element_ids_list:
-                # Здесь можно использовать каждый data_element_id по отдельности
                 work_load = WorkLoads.objects.get(id=data_element_id)
                 groups = work_load.groups.all()
-                cabinets_info = work_load.cabinets.all()
-                # lessons_cells = LessonsCells.objects.filter(dataElementId__in=work_load)
+                print(lessons_cells)
                 for cabinet in cabinets_info:
                     cabinet_data.append({
                         'title': cabinet.title,
