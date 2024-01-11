@@ -434,29 +434,37 @@ def print_schedule(request, app_id):
 def get_cabinet_info(request, app_id):
     if request.method == 'GET':
         data_element_ids = request.GET.getlist('dataElementIds')  # Получаем dataElementIds из запроса AJAX
+
+        if not data_element_ids:
+            print("Список dataElementIds пустой.")
+            return HttpResponse("Список dataElementIds пустой.")
+
         data_element_ids = data_element_ids[0]
         data_element_ids_list = json.loads(data_element_ids)
         print('data_element_ids: ', data_element_ids)
-        try:
-            cabinet_data = []
-            for data_element_id in data_element_ids_list:
-                work_load = WorkLoads.objects.get(id=data_element_id)
-                groups = work_load.groups.all()
-                print(lessons_cells)
-                for cabinet in cabinets_info:
-                    cabinet_data.append({
-                        'title': cabinet.title,
-                        'building': cabinet.building,
-                        'dataElementId': data_element_id,
-                        'CellClassName': ' ',
-                        'group': ' ',
-                    })
 
-            # Возвращаем данные в формате JSON
-            return JsonResponse({'cabinetInfo': cabinet_data}, json_dumps_params={'ensure_ascii': False}, safe=False)
+        # Создаем список для хранения результатов
+        results = []
 
-        except ValueError:
-            return JsonResponse({'error': 'Неверный формат ID'})
+        # Перебираем все data_element_ids и выполняем операции с каждым идентификатором
+        for data_element_id in data_element_ids_list:
+            workloads = WorkLoads.objects.filter(id=data_element_id)
 
-    else:
-        return JsonResponse({'error': 'Метод запроса не поддерживается'})
+            # Получаем все объекты LessonsCells, связанные с найденными WorkLoads
+            lessons_cells = LessonsCells.objects.filter(dataElementId__in=workloads)
+
+            # Получаем кабинеты для каждого LessonsCells
+            cabinets_for_lessons = Cabinets.objects.filter(workloads__in=workloads)
+
+            # Создаем словарь для текущего элемента
+            result_item = {
+                # 'workload': list(workloads.values())[0],  # Предполагается, что для каждого ID существует только одна нагрузка
+                'lessons_cells': list(lessons_cells.values('cellName', 'group')),
+                'cabinets': list(cabinets_for_lessons.values('title', 'building')),
+            }
+
+            # Добавляем результаты в список
+            results.append(result_item)
+
+        # Возвращаем результаты в формате JSON
+        return JsonResponse({'Аудитории':results}, safe=False)

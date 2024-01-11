@@ -41,7 +41,7 @@ $(document).ready(function() {
                             cell.dataset.id = dataElementId;
                             cell.textContent = item.text;
                             // Вызов функции для получения информации о кабинете
-//                            getCabinetInfo(dataElementId, cell);
+                            // getCabinetInfo(dataElementId, cell);
                         }
                     })(cells[i]);
                 }
