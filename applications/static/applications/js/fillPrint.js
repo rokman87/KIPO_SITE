@@ -40,8 +40,6 @@ $(document).ready(function() {
                         if (cell.classList.value == cellClass && parentCell == parts[0]) {
                             cell.dataset.id = dataElementId;
                             cell.textContent = item.text;
-                            // Вызов функции для получения информации о кабинете
-                            // getCabinetInfo(dataElementId, cell);
                         }
                     })(cells[i]);
                 }
@@ -64,8 +62,8 @@ $(document).ready(function() {
             dataElementIds: JSON.stringify(uniqueDataElementIds) // Передача массива как строки JSON
         },
         dataType: 'json',
-        success: function(cabinetInfo) {
-            handleCabinetInfo(cabinetInfo);
+        success: function(Auditoriums) {
+            handleCabinetInfo(Auditoriums);
         },
         error: function(error) {
             console.error('Ошибка получения информации о кабинете:', error);
@@ -75,21 +73,24 @@ $(document).ready(function() {
 
 
     // Функция для обработки информации о кабинете
-    function handleCabinetInfo(cabinetInfo) {
-        if (cabinetInfo && cabinetInfo.length > 0) {
-            var Item = cabinetInfo[0];
-            var title = Item.title;
-            var building = Item.building;
+    function handleCabinetInfo(Auditoriums) {
+    // Проверяем, является ли Auditoriums объектом и имеет ли числовые свойства
+    if (typeof Auditoriums === 'object' && Auditoriums !== null && !Array.isArray(Auditoriums)) {
+        // Получаем массив значений из объекта
+        var auditoriumsArray = Object.values(Auditoriums);
+        console.log(auditoriumsArray);
+        // Итерируем по массиву
+        auditoriumsArray.forEach(item => {
+            // Обработка информации о кабинетах
+            console.log("Кабинеты:", item[0].cabinets);
 
-            if (title && building) {
-                cell.textContent += building + ', ауд. ' + title;
-            } else {
-                console.error('title или building пусты или не содержат ожидаемых данных');
-            }
-        } else {
-            console.error('cabinetInfo пуст или не содержит ожидаемых данных');
-        }
+            // Обработка информации о ячейках уроков
+            console.log("Ячейки уроков:", item[0].lessons_cells);
+        });
+    } else {
+        console.error("Ошибка: Auditoriums не является объектом с числовыми свойствами.");
     }
+}
 
     // Функция для обработки собранных данных
     function processCollectedData(dataElementIds) {

@@ -467,4 +467,4 @@ def get_cabinet_info(request, app_id):
             results.append(result_item)
 
         # Возвращаем результаты в формате JSON
-        return JsonResponse({'Аудитории':results}, safe=False)
+        return JsonResponse({'Auditoriums':results}, safe=False)
