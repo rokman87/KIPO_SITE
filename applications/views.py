@@ -319,6 +319,7 @@ def settings(request, app_id):
     return render(request, 'applications/settings.html', {'app_id': app_id})
 
 
+
 def find_week_title(request):
     week_title = None
     if request.COOKIES.get('selectedElementId'):
@@ -458,7 +459,6 @@ def get_cabinet_info(request, app_id):
 
             # Создаем словарь для текущего элемента
             result_item = {
-                # 'workload': list(workloads.values())[0],  # Предполагается, что для каждого ID существует только одна нагрузка
                 'lessons_cells': list(lessons_cells.values('cellName', 'group')),
                 'cabinets': list(cabinets_for_lessons.values('title', 'building')),
             }
@@ -468,3 +468,7 @@ def get_cabinet_info(request, app_id):
 
         # Возвращаем результаты в формате JSON
         return JsonResponse({'Auditoriums':results}, safe=False)
+
+
+def test(request):
+    return render(request, 'applications/test.html', )

@@ -1,7 +1,79 @@
 {% extends 'applications/layout.html' %}
 
 {% block title %}Публикация{% endblock %}
+{% block styles %}
+<style>
+table.table {
+width: 70%;
+margin: auto;
+margin-top: 3%;
+}
+body {
+text-align: center;
+}
 
+.buttons {
+margin-left: 33%;
+margin-top: 5%;
+}
+
+#updateButton, #deleteButton {
+margin-right: 10px; /* Расстояние между кнопками */
+}
+
+#updateButton {
+background-color: green; /* Зеленый цвет для кнопки обновления */
+color: white;
+}
+
+#deleteButton {
+background-color: red; /* Красный цвет для кнопки удаления */
+color: white;
+}
+</style>
+{% endblock %}
 {% block content %}
+<div class="features">
+    <header>
+        <h1>Публикация рассписания</h1>
+    </header>
+    <div class="buttons">
+        <button id="updateButton">Обновить публикацию</button>
+        <button id="deleteButton">Удалить публикацию</button>
+    </div>
 
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Ссылка на опубликованное расписание</th>
+            <td><a href="https://schedule.mstimetables.ru/publications/35ddcc86-1bc0-4f83-ae44-ad3abbeaf4ca">https://schedule.mstimetables.ru/publications/35ddcc86-1bc0-4f83-ae44-ad3abbeaf4ca</a></td>
+        </tr>
+        <tr>
+            <th scope="row">Дата последней публикации</th>
+            <td>Data</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Функция для обновления публикации
+    function updatePublication() {
+        // Ваш код для обновления публикации новой публикации собирается массив данных или создается новая таблица
+        alert("Публикация обновлена!");
+    }
+
+    // Функция для удаления публикации
+    function deletePublication() {
+        // Ваш код для удаления публикации
+        alert("Публикация удалена!");
+    }
+    document.getElementById("updateButton").addEventListener("click", updatePublication);
+    document.getElementById("deleteButton").addEventListener("click", deletePublication);
+</script>
 {% endblock %}

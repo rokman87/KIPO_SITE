@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Выбор действий с элементом</title>
+  <style>
+    .element {
+      width: 200px;
+      height: 100px;
+      background-color: lightblue;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .options button {
+      display: block;
+      margin-bottom: 5px;
+    }
+    table {
+      width: 800px;
+      height: 400px;
+    }
+    td {
+      width: 200px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<table border="1">
+  <tr>
+    <td rowspan="3" id="cell1">
+      <div class="element" onclick="showOptions(event)" style="background-color: #5f757d;">
+        Нажмите, чтобы выбрать действие
+      </div>
+
+      <div class="options">
+        <button onclick="moveElement(this)">Перенести элемент</button>
+        <button onclick="removeElement()">Удалить элемент</button>
+      </div>
+    </td>
+    <td rowspan="3" id="cell2">
+      <div class="element" onclick="showOptions(event)" style="background-color: #00bbff;">
+        Нажмите, чтобы выбрать действие
+      </div>
+
+      <div class="options">
+        <button onclick="moveElement(this)">Перенести элемент</button>
+        <button onclick="removeElement()">Удалить элемент</button>
+      </div>
+    </td>
+    <td rowspan="3"></td> <!-- Пустая ячейка -->
+    <td rowspan="3"></td> <!-- Пустая ячейка -->
+  </tr>
+  <tr></tr>
+  <tr></tr>
+  <tr>
+    <td id="cell3">
+      <div class="element" onclick="showOptions(event)" style="background-color: #b19ecf;">
+        Нажмите, чтобы выбрать действие
+      </div>
+
+      <div class="options">
+        <button onclick="moveElement(this)">Перенести элемент</button>
+        <button onclick="removeElement()">Удалить элемент</button>
+      </div>
+    </td>
+    <td id="cell4">
+      <div class="element" onclick="showOptions(event)">
+        Нажмите, чтобы выбрать действие
+      </div>
+
+      <div class="options">
+        <button onclick="moveElement(this)">Перенести элемент</button>
+        <button onclick="removeElement()">Удалить элемент</button>
+      </div>
+    </td>
+    <td></td> <!-- Пустая ячейка -->
+    <td></td> <!-- Пустая ячейка -->
+  </tr>
+  <tr>
+    <td></td> <!-- Пустая ячейка -->
+    <td></td> <!-- Пустая ячейка -->
+    <td></td> <!-- Пустая ячейка -->
+    <td></td> <!-- Пустая ячейка -->
+  </tr>
+</table>
+
+<script>
+  var selectedElement = null;
+
+  function showOptions(event) {
+    selectedElement = event.target;
+    var options = selectedElement.nextElementSibling;
+    options.style.display = 'block';
+    options.style.left = event.clientX + 'px';
+    options.style.top = event.clientY + 'px';
+
+    document.onclick = function(e) {
+      if (e.target !== options.previousElementSibling && e.target !== options) {
+        options.style.display = 'none';
+        document.onclick = null;
+      }
+    };
+  }
+
+  function moveElement(button) {
+    var cell = button.parentElement.previousElementSibling;
+    var targetCell = event.target.closest('td');
+    if (targetCell) {
+      targetCell.appendChild(selectedElement);
+      // Очищаем отображение опций после перемещения
+      var options = button.parentElement;
+      options.style.display = 'none';
+      document.onclick = null;
+    }
+  }
+
+  function removeElement() {
+    // Реализация удаления элемента
+    console.log('Удаление элемента');
+  }
+
+  // Добавляем обработчик события для каждой ячейки таблицы
+  var cells = document.querySelectorAll('td');
+  cells.forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      if (selectedElement) {
+        this.appendChild(selectedElement);
+        selectedElement = null;
+        var options = this.querySelector('.options');
+        options.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

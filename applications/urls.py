@@ -3,6 +3,7 @@ from . import views
 from .views import SaveCellData
 
 urlpatterns = [
+    path('test', views.test, name='test'),
     path('<int:app_id>/schedules/', views.schedules, name='schedules'),
     path('<int:app_id>/bells/', views.bells, name='bells'),
     path('<int:app_id>/lessons/url-django/', SaveCellData.as_view(), name='save-cell-data'),
@@ -21,6 +22,5 @@ urlpatterns = [
     path('<int:app_id>/print/schedule/print_schedule/', views.print_schedule, name='print_schedule'),
     path('<int:app_id>/print/schedule/get_cabinet_info/', views.get_cabinet_info, name='get_cabinet_info'),
     path('ajax/get_workload/<int:workload_id>/', views.get_workload, name='get_workload'),
-
 
 ]

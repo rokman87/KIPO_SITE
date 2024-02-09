@@ -69,17 +69,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'kipo',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',  # или например 'localhost' если MySQL сервер на той же машине
-#         'PORT': '3306',  # стандартный порт MySQL, измените, если он отличается
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

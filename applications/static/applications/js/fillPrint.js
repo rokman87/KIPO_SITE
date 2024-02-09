@@ -73,19 +73,34 @@ $(document).ready(function() {
 
 
     // Функция для обработки информации о кабинете
-    function handleCabinetInfo(Auditoriums) {
+function handleCabinetInfo(Auditoriums) {
     // Проверяем, является ли Auditoriums объектом и имеет ли числовые свойства
     if (typeof Auditoriums === 'object' && Auditoriums !== null && !Array.isArray(Auditoriums)) {
         // Получаем массив значений из объекта
         var auditoriumsArray = Object.values(Auditoriums);
-        console.log(auditoriumsArray);
-        // Итерируем по массиву
-        auditoriumsArray.forEach(item => {
-            // Обработка информации о кабинетах
-            console.log("Кабинеты:", item[0].cabinets);
 
-            // Обработка информации о ячейках уроков
-            console.log("Ячейки уроков:", item[0].lessons_cells);
+        // Итерируем по внешнему массиву
+        auditoriumsArray.forEach(outerItem => {
+            // Итерируем по внутреннему массиву
+            outerItem.forEach(innerItem => {
+                // Обработка информации о кабинетах
+                const cabinetBuilding = innerItem.cabinets[0].building;
+                const cabinetTitle = innerItem.cabinets[0].title;
+                console.log(cabinetBuilding, "Кабинет:", cabinetTitle);
+
+                // Итерируем по ячейкам уроков
+                innerItem.lessons_cells.forEach(lessonCell => {
+                    // Обработка информации о каждой ячейке урока
+                    console.log("Ячейка урока:", lessonCell.cellName, lessonCell.group);
+                    var elements = document.getElementsByClassName(lessonCell.cellName);
+                    if (elements) {
+                        // Ваш код для обработки найденной ячейки
+                        console.log("Найденная ячейка:", elements);
+                    } else {
+                        console.log("Ячейка не найдена");
+                    }
+                });
+            });
         });
     } else {
         console.error("Ошибка: Auditoriums не является объектом с числовыми свойствами.");
