@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'main',
     'users',
     'applications',
+    'publications',
 ]
 
 MIDDLEWARE = [
